@@ -1,0 +1,49 @@
+<!-- <svg
+      width="1024.000000pt" height="1024.000000pt"
+      viewBox="0 0 200 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* 배경 */}
+      <rect width="200" height="200" fill="#1E90FF" />
+      
+      {/* 알림+축구공 캐릭터 */}
+      <g transform="translate(30,30)">
+        <path d="M40 10C45 10 50 15 50 20V30H30V20C30 15 35 10 40 10Z" fill="#58ACFA"/>
+        <path d="M47 35H33C31 35 30 36 30 38V42C30 44 31 45 33 45H47C49 45 50 44 50 42V38C50 36 49 35 47 35Z" fill="#58ACFA"/>
+        <circle cx="40" cy="60" r="25" fill="white" stroke="#000" stroke-width="2"/>
+        <polygon points="30,45 50,45 60,60 50,75 30,75 20,60" fill="#000"/>
+        <circle cx="32" cy="58" r="3" fill="black"/>
+        <circle cx="48" cy="58" r="3" fill="black"/>
+        <path d="M34 65 Q40 70, 46 65" stroke="black" stroke-width="2" fill="none"/>
+        <path d="M60 70 Q70 75, 75 65" stroke="#58ACFA" stroke-width="4" fill="none"/>
+      </g>
+
+      {/* PLAB NOTI 텍스트 */}
+      <text x="80" y="80" font-family="Arial" font-weight="bold" font-size="24" fill="white">PLAB</text>
+      <text x="80" y="110" font-family="Arial" font-weight="normal" font-size="24" fill="#58ACFA">NOTI</text>
+    </svg> -->
+
+    <svg
+      width="200"
+      height="100"
+      viewBox="0 0 200 160"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* 알림+축구공 캐릭터 */}
+      <g transform="translate(30,30)">
+        <path d="M40 10C45 10 50 15 50 20V30H30V20C30 15 35 10 40 10Z" fill="#58ACFA"/>
+        <path d="M47 35H33C31 35 30 36 30 38V42C30 44 31 45 33 45H47C49 45 50 44 50 42V38C50 36 49 35 47 35Z" fill="#58ACFA"/>
+        <circle cx="40" cy="60" r="25" fill="white" stroke="#000" stroke-width="2"/>
+        <polygon points="30,45 50,45 60,60 50,75 30,75 20,60" fill="#000"/>
+        <circle cx="32" cy="58" r="3" fill="black"/>
+        <circle cx="48" cy="58" r="3" fill="black"/>
+        <path d="M34 65 Q40 70, 46 65" stroke="black" stroke-width="2" fill="none"/>
+        <path d="M60 70 Q70 75, 75 65" stroke="#58ACFA" stroke-width="4" fill="none"/>
+      </g>
+
+      {/* PLAB NOTI 텍스트 */}
+      <text x="80" y="80" font-family="Arial" font-weight="bold" font-size="24" fill="white">PLAB</text>
+      <text x="80" y="110" font-family="Arial" font-weight="normal" font-size="24" fill="#58ACFA">NOTI</text>
+    </svg>

@@ -1,0 +1,33 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# 모든 이미지 폴더 안의 파일 무시
+src/assets/images/**/*
+
+# 단, svg 파일은 제외
+!src/assets/images/**/*.svg
+
+# 폴더는 무시하지 않도록
+!src/assets/images/**/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
