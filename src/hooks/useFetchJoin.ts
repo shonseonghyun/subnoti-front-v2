@@ -1,10 +1,10 @@
 import { useMutation } from "react-query";
 import { fetchJoin } from "src/api/api";
-import { IJoinRegType } from "src/type/type";
+import { IMemberRegType } from "src/type/type";
 
 export const useFetchJoin=(onSuccess:any)=>{
     return useMutation(
-        (data:IJoinRegType)=>fetchJoin(data),
+        (data:IMemberRegType)=>fetchJoin(data),
         {
             onSuccess:onSuccess
         }

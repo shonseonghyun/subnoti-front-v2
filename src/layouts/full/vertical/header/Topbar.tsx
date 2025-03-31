@@ -1,14 +1,7 @@
 
-import { AppBar, Box, Button, Stack, Toolbar, styled } from '@mui/material';
-
-import wrappixelLogo from 'src/assets/images/logos/logo-wrappixel.svg';
-import { useFetchGetEnum } from 'src/theme/useFetchGetEnum';
-
-
+import { AppBar, Box, Stack, Toolbar, styled } from '@mui/material';
 
 const Topbar = () => {
-
-
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     boxShadow: 'none',
     background: theme.palette.grey[600],
@@ -22,9 +15,6 @@ const Topbar = () => {
     width: '100%',
     color: theme.palette.text.secondary,
   }));
-
-
-  const get= useFetchGetEnum("s");
 
   return (
     <AppBarStyled position="sticky" color="default">

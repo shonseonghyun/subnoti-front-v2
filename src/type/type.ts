@@ -3,13 +3,6 @@ export interface ILoignRegType{
     pwd:string
 }
 
-export interface INotiRegType{
-    matchNo:number,
-    subType:string,
-    memberNo:number,
-    email:string
-}
-
 export interface IMemberRegType{
     email:string,
     pwd:string,
@@ -19,6 +12,14 @@ export interface IMemberRegType{
     gender:string,
     tel:string
 }
+
+export interface INotiRegType{
+    matchNo:number,
+    subType:string,
+    memberNo:number,
+    email:string
+}
+
 
 export interface INotiRegDatesType{
     memberNo:number,
