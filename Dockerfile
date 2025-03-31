@@ -2,7 +2,7 @@
 FROM node:20.14.0-alpine AS build
 
 # 확인용
-RUN RUN node -v && npm -v
+RUN node -v && npm -v
 
 # root 에 app 폴더를 생성 
 RUN mkdir /app
