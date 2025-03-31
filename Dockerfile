@@ -1,9 +1,6 @@
 # step 1 빌드를 하기 위한 과정
 FROM node:20.14.0-alpine AS build
 
-# 확인용
-RUN node -v && npm -v
-
 # root 에 app 폴더를 생성 
 RUN mkdir /app
 
@@ -16,7 +13,7 @@ COPY ./package* ./
 
 # /app 폴더 내에서 package.json에 포함된 의존성 패키지들을 일괄적으로 설치하는 명령어
 # 완료 후 /app 폴더 내에 node_modules 생성
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # 체크t
 RUN ls -lr
