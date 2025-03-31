@@ -134,7 +134,7 @@ export const StyledDate = styled.div`
   position: absolute;
   cursor: pointer;
   left: 7%;
-  top: 6%;
+  top: 5%;
   /* background-color: ${(props) => props.theme.primary_3}; */
   background-color: antiquewhite;
   color: darkgoldenrod;
@@ -149,7 +149,6 @@ export const StyledDate = styled.div`
   font-weight: 800;
   &:hover {
     transform: scale(1.1);
-
   }
 `;
 

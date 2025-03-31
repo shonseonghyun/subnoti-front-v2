@@ -36,13 +36,17 @@ export default function SharedModal({ child, title }: ModalProps) {
         color="primary"
         sx={{
           mr: 1,
-          position: 'absolute',
-          right: '10%',
-          top: '4%',
+          position: 'fixed',
+          zIndex: "1",
+          // right: '10%',
+          // top: '4%',
+          bottom:'10%',
+          right:'8%',
           bgcolor: 'primary.main',
           color: 'white',
           '&:hover': {
             bgcolor: 'primary.dark',
+            transform: "scale(1.1)"
           },
         }}
         onClick={handleOpen}
