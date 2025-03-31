@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
 import { useFetchGetNotiRegDates } from 'src/hooks/useFetchGetNotiRegDates';
-import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue } from 'src/utils/date';
+import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue, getStartOfMonthFromValue } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import styled from "styled-components";
 import SharedModal from '../../../components/shared/SharedModal';
@@ -184,7 +184,7 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   const { authUserInfo } = useAuthStore.getState();
 
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(new Date());
-  const {startDate,endDate} = getStartAndEndOfMonthFromValue(date);
+  const {startDate,endDate} = getStartAndEndOfMonthFromValue(activeStartDate);
   const getNotiRegDates = useFetchGetNotiRegDates(authUserInfo.memberNo,startDate,endDate);
   
   const handleDateChange = (newDate: Value) => {
@@ -215,8 +215,14 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
         activeStartDate={
           activeStartDate === null ? undefined : activeStartDate
         }
+        // 달력의 월 변경 버튼(ex. <,>) 누를 시 실행되는 로직
         onActiveStartDateChange={({ activeStartDate }) =>{
-          console.log(activeStartDate); //이게 달력의 < > 버튼 누를 시
+          if(getStartOfMonthFromValue(today)===getStartOfMonthFromValue(activeStartDate)){
+            setDate(today);
+            setActiveStartDate(today);
+            return ;
+          }
+          setDate(activeStartDate);
           setActiveStartDate(activeStartDate)}
         }
         // 오늘 날짜에 '오늘' 텍스트 삽입하고 출석한 날짜에 점 표시를 위한 설정

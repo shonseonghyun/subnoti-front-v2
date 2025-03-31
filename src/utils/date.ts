@@ -116,10 +116,25 @@ export const formatCalendarValueToYYYYMMDD = (dateValue: Value): string => {
 /** 해당 날짜의 해당 월의 시작일과 끝일을 YYYYMMDD 형태로 리턴 (Value 타입 지원) */
 export const getStartAndEndOfMonthFromValue = (dateValue: Value): { startDate: string, endDate: string } => {
   if (!(dateValue instanceof Date)) return { startDate: '', endDate: '' };
-  const start = new Date(dateValue.getFullYear(), dateValue.getMonth(), 1);
-  const end = new Date(dateValue.getFullYear(), dateValue.getMonth() + 1, 0);
+
   return {
-    startDate: formatCalendarValueToYYYYMMDD(start),
-    endDate: formatCalendarValueToYYYYMMDD(end)
+    startDate: getStartOfMonthFromValue(dateValue),
+    endDate: getEndOfMonthFromValue(dateValue)
   };
+};
+
+/** 해당 날짜의 해당 월의 시작일과 끝일을 YYYYMMDD 형태로 리턴 (Value 타입 지원) */
+export const getStartOfMonthFromValue = (dateValue: Value) => {
+  if (!(dateValue instanceof Date)) return "";
+  const start = new Date(dateValue.getFullYear(), dateValue.getMonth(), 1);
+
+  return formatCalendarValueToYYYYMMDD(start);
+};
+
+/** 해당 날짜의 해당 월의 시작일과 끝일을 YYYYMMDD 형태로 리턴 (Value 타입 지원) */
+export const getEndOfMonthFromValue = (dateValue: Value) => {
+  if (!(dateValue instanceof Date)) return "";
+  const end = new Date(dateValue.getFullYear(), dateValue.getMonth() + 1, 0);
+
+  return formatCalendarValueToYYYYMMDD(end);
 };
