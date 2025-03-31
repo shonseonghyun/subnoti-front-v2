@@ -13,13 +13,13 @@ dist-ssr
 *.local
 
 # 모든 이미지 폴더 안의 파일 무시
-src/assets/images/**/*
+# src/assets/images/**/*
 
 # 단, svg 파일은 제외
-!src/assets/images/**/*.svg
+# !src/assets/images/**/*.svg
 
 # 폴더는 무시하지 않도록
-!src/assets/images/**/
+# !src/assets/images/**/
 
 # Editor directories and files
 .vscode/*
