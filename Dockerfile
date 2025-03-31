@@ -1,5 +1,8 @@
 # step 1 빌드를 하기 위한 과정
-FROM node:16-alpine AS build
+FROM node:20.14.0-alpine AS build
+
+# 확인용
+RUN RUN node -v && npm -v
 
 # root 에 app 폴더를 생성 
 RUN mkdir /app
