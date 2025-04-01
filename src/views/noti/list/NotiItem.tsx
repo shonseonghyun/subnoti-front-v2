@@ -35,15 +35,18 @@ export default function NotiItem({noti}:NotiItemProps) {
           image="/static/images/cards/contemplative-reptile.jpg"
         />
         <CardContent>
+          <Typography gutterBottom  variant="h6" sx={{ color: 'text.secondary'  }}>
+              {noti.subType=="MANAGER_FREE" ? "매니저 서브" : "슈퍼 서브"} 
+          </Typography>
           <Typography gutterBottom variant="h5" component="div">
             {formatFullDateTimeToKorean(noti.startDt+noti.startTm)} 
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant="body1" sx={{ color: 'text.secondary' }}>
               {noti.matchName}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions sx={{background:"aliceblue"}}>
         <Button size="small" color="primary" onClick={clickedDelItem}>
           Del
         </Button>
