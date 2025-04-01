@@ -8,11 +8,14 @@ import {
 import { NavLink, useLocation } from 'react-router';
 
 import { Icon } from "@iconify/react";
-import Menuitems from "./MenuItems";
+import Menuitems, { MenuitemsType } from "./MenuItems";
+import { useAuthStore } from "src/zustand/AuthUserInfo";
+import { useContext } from "react";
+import { DashboardContext } from "src/context/DashboardContext";
 
-const renderMenuItems = (items: any[], pathDirect: string) => {
-
-
+const renderMenuItems = (items: MenuitemsType[], pathDirect: string) => {
+  const { isLogin } = useAuthStore.getState();
+  const {isMobileSidebar , setIsMobileSidebar} = useContext(DashboardContext);
 
   return items.map((item) => {
     if (item.subheader) {
@@ -22,8 +25,9 @@ const renderMenuItems = (items: any[], pathDirect: string) => {
           <Menu
             subHeading={item.subheader}
             key={item.subheader}
-
-          ><></></Menu>
+          >
+            <></>
+          </Menu>
         </Box>
       );
     }
@@ -48,34 +52,40 @@ const renderMenuItems = (items: any[], pathDirect: string) => {
       );
     }
 
+    if(item.isForAll || isLogin===item.isRequiredLogin ){ //모든 사용자용 또는 로그인 여부에 따른 페이지 노출 판단
     // If the item has no children, render a MenuItem
-    return (
-      <MenuItem
-        key={item.id}
-        isSelected={pathDirect === item?.href}
-        borderRadius='999px'
-        icon={
-          item.icon ? (
-            <Icon icon={"solar:" + item.icon} width="20" height="20" />
-          ) : (
-            <Icon icon="mdi:circle" width="6" height="6" />
-          )
-        }
-        component={NavLink}
-        link={item.href && item.href !== "" ? item.href : undefined}
-        target={item.href && item.href.startsWith("https") ? "_blank" : "_self"}
-        badge={item.chip ? true : false}
-        badgeContent={item.chip || ""}
-        badgeColor='secondary'
-        badgeTextColor="#1b84ff"
-        disabled={item.disabled}
-      >
-        {item.title}
-      </MenuItem>
+      return (
+        <div key={item.title} onClick={()=>setIsMobileSidebar(!isMobileSidebar)}>
+          <MenuItem
+            key={item.id}
+            isSelected={pathDirect === item?.href}
+            borderRadius='999px'
+            icon={
+              item.icon ? (
+                <Icon icon={"solar:" + item.icon} width="20" height="20" />
+              ) : (
+                <Icon icon="mdi:circle" width="6" height="6" />
+              )
+            }
+            component={NavLink}
+            link={item.href && item.href !== "" ? item.href : undefined}
+            target={item.href && item.href.startsWith("https") ? "_blank" : "_self"}
+            badge={item.chip ? true : false}
+            badgeContent={item.chip || ""}
+            badgeColor='secondary'
+            badgeTextColor="#1b84ff"
+            disabled={item.disabled}
+          >
+            {item.title}
+          </MenuItem>
+        </div>
 
+      );
+    }
 
-    );
+    return <></>;
   });
+
 };
 
 const SidebarItems = () => {

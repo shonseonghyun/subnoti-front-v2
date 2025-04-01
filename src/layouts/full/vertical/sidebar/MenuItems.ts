@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash';
 
-interface MenuitemsType {
+export interface MenuitemsType {
   [x: string]: any;
   id?: string;
   navlabel?: boolean;
@@ -13,6 +13,8 @@ interface MenuitemsType {
   chipColor?: string;
   variant?: string;
   external?: boolean;
+  isRequiredLogin:boolean;
+  isForAll?:boolean;
 }
 
 const Menuitems: MenuitemsType[] = [
@@ -26,19 +28,22 @@ const Menuitems: MenuitemsType[] = [
     title: 'Dashboard',
     icon: 'layers-minimalistic-line-duotone',
     href: '/',
+    isRequiredLogin: false,
+    isForAll:true,
   },
   {
     id: uniqueId(),
     title: 'Noti',
     icon: 'screencast-2-linear',
     href: '/noti/list',
+    isRequiredLogin: true,
   },
   {
     id: uniqueId(),
     title: 'Profile',
     icon: 'atom-linear',
     href: '/form-layouts',
-
+    isRequiredLogin: true,
   },
   // {
   //   id: uniqueId(),

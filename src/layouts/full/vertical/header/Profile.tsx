@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, IconButton, Menu, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Link, useLocation ,useNavigate} from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import * as dropdownData from './data';
@@ -8,8 +8,7 @@ import * as dropdownData from './data';
 
 
 const Profile = () => {
-  const isLogin = useAuthStore((state) => !!state.authUserInfo.accessToken);
-  const { clearAuthUserInfo } = useAuthStore();
+  const { isLogin, clearAuthUserInfo } = useAuthStore.getState();
   const location = useLocation();
   const navigate = useNavigate();
 

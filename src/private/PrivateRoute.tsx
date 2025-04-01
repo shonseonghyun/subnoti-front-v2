@@ -3,7 +3,7 @@ import { useAuthStore } from '../zustand/AuthUserInfo';
 import TokenHeaderInterceptor from './TokenHeaderInterceptor';
 
 const PrivateRoute = () => {
-    const isLogin = useAuthStore((state) => !!state.authUserInfo.accessToken);
+    const {isLogin} = useAuthStore.getState();
     const currentLocation = useLocation();
     
     return isLogin 

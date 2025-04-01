@@ -7,6 +7,7 @@ export interface IAuthUserInfo {
   memberId: string;
   memberNo: number;
   email: string;
+  name: string;
 }
 
 interface AuthState {
@@ -25,6 +26,7 @@ export const useAuthStore = create<AuthState>()(
         memberId: '',
         memberNo: 0,
         email: '',
+        name: ''
       },
       isLogin: false,
       setAuthUserInfo: (info) =>
@@ -40,6 +42,7 @@ export const useAuthStore = create<AuthState>()(
             memberId: '',
             memberNo: 0,
             email: '',
+            name: '',
           },
           isLogin: false,
         }),

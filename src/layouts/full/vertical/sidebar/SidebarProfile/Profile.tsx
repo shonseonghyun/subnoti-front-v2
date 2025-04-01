@@ -1,8 +1,11 @@
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import SidebarProfileBgImg from 'src/assets/images/backgrounds/sidebar-profile-bg.jpg';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
+import { useAuthStore } from 'src/zustand/AuthUserInfo';
 
 export const Profile = () => {
+  const { authUserInfo, isLogin} = useAuthStore.getState();
+
   return (
     <Box
       sx={{
@@ -54,7 +57,7 @@ export const Profile = () => {
                 overflow: 'hidden',
               }}
             >
-              손성현 님
+              {isLogin ? `${authUserInfo.name} 님` : "게스트 님"}
             </Typography>
             {/* <Box>
               <Tooltip title="User" placement="top">

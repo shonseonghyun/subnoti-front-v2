@@ -73,6 +73,7 @@ export const refreshAccessTokenWithRefreshToken = () => {
             email: authUserInfo.email,
             memberId: authUserInfo.memberId,
             memberNo: authUserInfo.memberNo,
+            name: authUserInfo.name,
           });
 
           // 재요청 Authorization 헤더 업데이트

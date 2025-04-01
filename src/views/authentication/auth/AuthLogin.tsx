@@ -27,6 +27,7 @@ const AuthLogin = ()=> {
         memberId: data.data.memberId,
         email: data.data.email,
         memberNo: data.data.memberNo,
+        name: data.data.name
       });
   
       const from = location.state?.redirectedFrom?.pathname || '/';
