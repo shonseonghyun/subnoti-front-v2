@@ -138,3 +138,8 @@ export const getEndOfMonthFromValue = (dateValue: Value) => {
 
   return formatCalendarValueToYYYYMMDD(end);
 };
+
+export const getTodayAtMidnight =()=>{
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+}

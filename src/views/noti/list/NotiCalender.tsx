@@ -178,7 +178,7 @@ export const StyledDot = styled.div`
 `;
 
 const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
-  console.log("NotiCalender 랜더링");
+  console.log("NotiCalender 랜더링: ",date,"/",today);
 
   const { authUserInfo } = useAuthStore.getState();
 
@@ -187,13 +187,31 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   const getNotiRegDates = useFetchGetNotiRegDates(authUserInfo.memberNo,startDate,endDate);
   
   const handleDateChange = (newDate: Value) => {
-    setDate(newDate);
+    if (newDate instanceof Date && date instanceof Date) {
+      if (newDate.getTime() === date.getTime()) return; // 동일하면 무시
+    } else if (newDate === date) {
+      return;
+    }
+    setDate(newDate);  
   };
 
   const handleTodayClick = () => {
-    // const today = new Date();
-    setActiveStartDate(today);
-    setDate(today);
+    // 기존
+    // 새로운 Date 객체를 만들어서 넘겨주기 때문에, 값은 같아 보여도 참조(reference)가 달라서 리렌더링 발생
+    // setActiveStartDate(today);
+    // setDate(today);
+
+    // 개선
+    const currentDate = date instanceof Date ? date : null;
+  
+    if (!currentDate || currentDate.getTime() !== today.getTime()) {
+      setDate(today);
+    }
+  
+    // activeStartDate도 마찬가지로 비교 후 업데이트
+    if (!activeStartDate || activeStartDate.getTime() !== today.getTime()) {
+      setActiveStartDate(today);
+    }
   };
     
   return (
@@ -254,4 +272,5 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
 
 export default NotiCalender;
 
-  
+// 부모가 여러 state를 가졌을 경우 재랜더링될 경우 이점을 지님. 부모의 state가 객체라 이점 보기 힘들어 기본 export 채택
+// export const MemoizedNotiCalender=React.memo(NotiCalender);

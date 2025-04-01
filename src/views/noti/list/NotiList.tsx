@@ -3,7 +3,7 @@ import DashboardCard from 'src/components/shared/DashboardCard';
 import { useFetchGetNotiListByDate } from 'src/hooks/useFetchGetNotiListByDate';
 import { formatCalendarValueToYYYYMMDD } from 'src/utils/date';
 import { INotiListProps } from '../NotiPage';
-import NotiItem from './NotiItem';
+import { MemoizedNotiItem } from './NotiItem';
 
 export interface INotiItemType{
     notiNo:number,
@@ -15,6 +15,7 @@ export interface INotiItemType{
 }
 
 const NotiList = ({date}:INotiListProps) => {
+    console.log("NotiList 랜더링: ",date);
     const getSubNoti = useFetchGetNotiListByDate(1,formatCalendarValueToYYYYMMDD(date));
 
     return (
@@ -26,7 +27,7 @@ const NotiList = ({date}:INotiListProps) => {
                     <Stack spacing={2}>
                         {
                             getSubNoti.data.data.map((item:INotiItemType)=>{
-                                return <NotiItem key={item.notiNo} noti={item}/>
+                                return <MemoizedNotiItem key={item.notiNo} noti={item}/>
                             })
                         }
                     </Stack>

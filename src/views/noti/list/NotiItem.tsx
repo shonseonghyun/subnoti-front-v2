@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { INotiItemType } from './NotiList';
 import { useFetchDelNoti } from 'src/hooks/useFetchDelNoti';
 import { formatFullDateTimeToKorean } from 'src/utils/date';
@@ -15,6 +15,8 @@ type NotiItemProps ={
 }
 
 export default function NotiItem({noti}:NotiItemProps) {
+  console.log("NotiItem 랜더링: ",noti.notiNo);
+
   const clickedItem = useCallback(()=>{
     window.open(`https://www.plabfootball.com/match/${noti.matchNo}/`);
   },[noti.matchNo]);
@@ -49,3 +51,5 @@ export default function NotiItem({noti}:NotiItemProps) {
     </Card>
   );
 }
+
+export const MemoizedNotiItem = React.memo(NotiItem);
