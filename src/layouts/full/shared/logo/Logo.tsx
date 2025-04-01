@@ -27,8 +27,11 @@ import { ReactComponent as TestAppLogo } from 'src/assets/images/logos/test-app-
 
 import appLogo from 'src/assets/images/backgrounds/app-logo.png';
 
+interface ILogoProps{
+  onClick?: ()=>void;
+}
 
-const Logo = () => {
+const Logo = ({onClick}:ILogoProps) => {
 
 
 
@@ -41,6 +44,7 @@ const Logo = () => {
 
   return (
     <LinkStyled
+      onClick={onClick}
       to="/"
       style={{
         display: 'flex',

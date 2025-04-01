@@ -69,8 +69,10 @@ const Sidebar = () => {
         <Drawer
           anchor="left"
           open={isMobileSidebar}
+          // onMouseLeave={() => {setIsMobileSidebar(false);}}
           onClose={() => setIsMobileSidebar(false)}
           variant="temporary"
+          transitionDuration={500}
           PaperProps={{
             sx: {
               width: '256px',
@@ -84,8 +86,7 @@ const Sidebar = () => {
           {/* Logo */}
           {/* ------------------------------------------- */}
           <Box px={2} sx={{background: theme.palette.primary.main, display:"flex", justifyContent:"center"}}>
-            {/* <AuthLogo /> */}
-            <Logo />
+            <Logo onClick={()=>{setIsMobileSidebar(!isMobileSidebar)}}/>
           </Box>
           <Profile />
           {/* ------------------------------------------- */}

@@ -18,18 +18,23 @@ const NotiList = ({date}:INotiListProps) => {
     const getSubNoti = useFetchGetNotiListByDate(1,formatCalendarValueToYYYYMMDD(date));
 
     return (
-        <DashboardCard>
-            <Stack spacing={2}>
-                {
-                    getSubNoti.data && 
-                    getSubNoti.data.data.map((item:INotiItemType)=>{
-                        return (
-                            <NotiItem key={item.notiNo} noti={item}/>
-                        )
-                    })
-                }
-            </Stack>
-        </DashboardCard>
+        <>
+            {
+                getSubNoti.data && getSubNoti.data.data.length>0
+                ?
+                <DashboardCard>
+                    <Stack spacing={2}>
+                        {
+                            getSubNoti.data.data.map((item:INotiItemType)=>{
+                                return <NotiItem key={item.notiNo} noti={item}/>
+                            })
+                        }
+                    </Stack>
+                </DashboardCard>
+                :
+                <></>
+            }
+        </>
     );
 };
 

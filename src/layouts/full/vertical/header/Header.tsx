@@ -77,6 +77,12 @@ const Header = () => {
   // const handleClose = () => {
   //   setAnchorEl(null);
   // };
+
+  const handleSidebarToggle = () => {
+    if (!lgUp) {
+      setIsMobileSidebar(!isMobileSidebar);
+    }
+  };
   
   return (
     <>
@@ -101,9 +107,10 @@ const Header = () => {
               color="inherit"
               aria-label="menu"
               onClick={
-                lgUp
-                  ? () => { }
-                  : () => setIsMobileSidebar(!isMobileSidebar)
+                handleSidebarToggle
+              }
+              onMouseEnter={
+                handleSidebarToggle
               }
             >
               <Icon icon="solar:list-bold" height={20} />
@@ -166,7 +173,7 @@ const Header = () => {
               </Stack>
             </>
           )} */}
-          <Stack spacing={2} direction="row" alignItems="center">
+          <Stack spacing={3} direction="row" alignItems="center">
             <Profile />
           </Stack>
         </ToolbarStyled>
