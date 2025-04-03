@@ -8,4 +8,12 @@ export const toastSuc = () => {
 export const toastFail = (error:any) => {
     toast.error(getErrorDataByCode(error).content);
 }
-  
+
+export const toastFailMsg = (msg:string) => {
+  toast.error(msg);
+
+}
+
+export const toastSucMsg = (msg:string) => {
+  toast.success(msg);
+}

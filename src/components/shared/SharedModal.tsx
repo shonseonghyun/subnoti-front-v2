@@ -4,7 +4,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Modal from '@mui/material/Modal';
-import { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 
 const style = {
   position: 'absolute',
@@ -20,12 +20,14 @@ const style = {
   fontFamily: '"Pretendard", sans-serif'
 };
 
-interface ModalProps {
-  child: ReactNode;
+interface IModalProps {
+  children: React.ReactNode;
   title?: string;
 }
 
-export default function SharedModal({ child, title }: ModalProps) {
+export default function SharedModal({ children, title }: IModalProps) {
+  console.log("SharedModal 랜더링");
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -69,10 +71,12 @@ export default function SharedModal({ child, title }: ModalProps) {
         <Fade in={open}>
           <Box sx={style}>
             {title && <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: 'primary.main', textAlign: 'left', fontFamily: 'Pretendard, sans-serif' }}>{title}</Typography>}
-            {child}
+            {children} {/* 여기! */}
           </Box>
         </Fade>
       </Modal>
     </Box>
   );
 }
+
+export const MemorizedSharedModal= React.memo(SharedModal);

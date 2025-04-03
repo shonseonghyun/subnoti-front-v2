@@ -20,6 +20,9 @@ function App() {
         refetchOnReconnect: false,
         retry:0,
         // useErrorBoundary:true
+        onError:(error:any) =>{
+          toastFail(error);
+        }
       },
       
       mutations:{

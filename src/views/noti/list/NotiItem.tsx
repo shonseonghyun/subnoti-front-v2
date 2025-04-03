@@ -5,9 +5,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import React, { useCallback } from 'react';
-import { useFetchDelNoti } from 'src/hooks/useFetchDelNoti';
 import { formatFullDateTimeToKorean } from 'src/utils/date';
 import { INotiItemType } from './NotiList';
+import { useFetchDelNoti } from 'src/hooks/mutation/useFetchDelNoti';
 
 type NotiItemProps ={
   noti : INotiItemType
@@ -28,11 +28,6 @@ export default function NotiItem({noti}:NotiItemProps) {
   return (
     <Card sx={{ maxWidth: "100%" }}>
       <CardActionArea onClick={clickedItem}>
-        {/* <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-        /> */}
         <CardContent>
           <Typography gutterBottom  variant="h6" sx={{ color: 'text.secondary'  }}>
               {noti.subType=="MANAGER_FREE" ? "매니저 서브" : "슈퍼 서브"} 

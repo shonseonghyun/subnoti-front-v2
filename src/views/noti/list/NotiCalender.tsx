@@ -1,13 +1,13 @@
 import moment from 'moment';
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
-import { useFetchGetNotiRegDates } from 'src/hooks/useFetchGetNotiRegDates';
+import { useFetchGetNotiRegDates } from 'src/hooks/query/useFetchGetNotiRegDates';
 import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue, getStartOfMonthFromValue } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import styled from "styled-components";
-import SharedModal from '../../../components/shared/SharedModal';
+import { MemorizedSharedModal } from '../../../components/shared/SharedModal';
 import { INotiCalenderProps } from '../NotiPage';
 import NotiReg from '../reg/NotiReg';
 
@@ -187,11 +187,19 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   const getNotiRegDates = useFetchGetNotiRegDates(authUserInfo.memberNo,startDate,endDate);
   
   const handleDateChange = (newDate: Value) => {
+    console.log("클릭한 date:",newDate);
+    console.log("기존 date:", date);
+
     if (newDate instanceof Date && date instanceof Date) {
-      if (newDate.getTime() === date.getTime()) return; // 동일하면 무시
+      if (newDate.getTime() === date.getTime()){ 
+        console.log("동일하여 무시")  
+        return;
+      }
     } else if (newDate === date) {
+      console.log("동일하여 무시")  
       return;
     }
+    console.log("??");
     setDate(newDate);  
   };
 
@@ -213,6 +221,9 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
       setActiveStartDate(today);
     }
   };
+
+  //랜더링 최적화를 위해 useMemo
+  const notiRegMemo = useMemo(() => <NotiReg />, []);
     
   return (
     <StyledCalendarWrapper>
@@ -265,7 +276,9 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
         }
       />
       <StyledDate onClick={handleTodayClick}>TODAY</StyledDate>
-      <SharedModal child={<NotiReg />}/>
+      <MemorizedSharedModal>
+        {notiRegMemo}
+      </MemorizedSharedModal>
   </StyledCalendarWrapper>
   );
 }

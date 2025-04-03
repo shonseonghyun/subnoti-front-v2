@@ -51,6 +51,12 @@ export const fetchGetEnum = async (key:string)=>{
     .then(response=>response.data);
 }
 
+export const fetchGetEmailDuplicate = async (email:string)=>{
+    const url = `/api/v1/member/email/duplicate/${email}`;
+    return await PublicApi.get(url)
+    .then(response=>response.data);
+}
+
 export const fetchReissueAccessTokenWithRefreshToken = async (refreshToken:string)=>{
     const url = `/api/v1/auth/reissue`;
     return await PublicApi.post(url,{

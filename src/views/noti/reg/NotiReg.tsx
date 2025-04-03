@@ -1,10 +1,8 @@
-import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
-import { useFetchGetPlabMatch } from 'src/hooks/useFetchPlabMatch';
-import { useRegFetchSubNoti } from 'src/hooks/useRegFetchSubNoti';
+import { useRegFetchSubNoti } from 'src/hooks/mutation/useRegFetchSubNoti';
+import { useFetchGetPlabMatch } from 'src/hooks/query/useFetchPlabMatch';
 import { INotiRegType } from 'src/type/type';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 
@@ -21,36 +19,64 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { useFetchGetEnum } from 'src/hooks/useFetchGetEnum';
+import { useFetchGetEnum } from 'src/hooks/query/useFetchGetEnum';
+import { toastFail, toastFailMsg, toastSucMsg } from 'src/utils/toast/toast';
 
 const NotiReg = () => {
+  const authUserInfo = useAuthStore((state) => state.authUserInfo);
+  console.log("NotiReg 랜더링");
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     resetField,
+    getValues,
     reset,
-    setFocus
+    setFocus,
+    trigger
   } = useForm<INotiRegType>({ mode: 'onChange' });
 
+  
+  // 매치 인증 플래그
   const [isMathcNoAvailable, setIsMathcNoAvailable] = useState(false);
-  const getPlabMatch = useFetchGetPlabMatch(watch('matchNo'));
+  
+  //============================ useFetchGetEnum =======================================//
+  const getSubTypeEnum = useFetchGetEnum('subType');
+  //============================ useFetchGetEnum =======================================//
 
-  const authUserInfo = useAuthStore((state) => state.authUserInfo);
 
+  //============================ useRegFetchSubNoti =======================================//
   const queryClient = useQueryClient();
   const onSuccess = () => {
-    toast.success('등록 성공!', { position: 'top-center' });
+    toastSucMsg("등록 성공하였습니다.");
     reset();
     setIsMathcNoAvailable(false);
 
     // 리스트를 invalidate 시키지만 refetch 시킴
     queryClient.invalidateQueries(['noti'], { refetchInactive: true });
   };
-
   const regSubNotiMutation = useRegFetchSubNoti(onSuccess);
-  const getSubTypeEnum = useFetchGetEnum('subType');
+  //============================ useRegFetchSubNoti =======================================//
+
+
+  //============================ useGetPlabMatch =======================================//
+  const onGetPlabMatchSuccess = ()=>{
+    toastSucMsg("매치번호 인증 완료하였습니다.");
+    setIsMathcNoAvailable(true);
+  }
+
+  const onGetPlabMatchError = (error:any)=>{
+    if(error.response.data){
+      toastFailMsg("존재하지 않는 매치번호입니다.");
+      return ;
+    }
+    toastFail(error);
+  }
+
+  const getPlabMatch = useFetchGetPlabMatch(getValues('matchNo'),onGetPlabMatchSuccess,onGetPlabMatchError);
+  //============================ useGetPlabMatch =======================================//
+
 
   const onValid = (data: INotiRegType) => {
     if (isMathcNoAvailable) {
@@ -61,24 +87,28 @@ const NotiReg = () => {
   const clickedResetBtn = () => {
     resetField('matchNo');
     setFocus('matchNo');
-    setIsMathcNoAvailable(false);
+    if(isMathcNoAvailable==true){
+      setIsMathcNoAvailable(false);
+    }
   };
 
+
   const clickedValidBtn = async () => {
-    if(errors.matchNo){
-      reset();
+    // const isValid = trigger("matchNo"); // 유효성 검증 수동 실행, 비동기 처리이므로 await 붙이지 않아 바로 다음줄로 넘어감, isValid는 항상 같은 값
+    const isValid = await trigger("matchNo"); //유효성 검증 수동 실행
+    const matchNo = getValues("matchNo");
+    if(!matchNo){
+      toastFailMsg("매치 번호를 입력해주세요.");
       return ;
     }
 
-    const response = await getPlabMatch.refetch();
-    if ((response.error as AxiosError)?.response?.status === 404) {
-      setIsMathcNoAvailable(false);
-      return;
+    if(!isValid){
+      reset();
+      toastFailMsg(errors?.matchNo?.message!);
+      return ;
     }
-    toast.success("매치번호 인증완료하였습니다",{
-      position:'top-center',
-    });
-    setIsMathcNoAvailable(true);
+
+    await getPlabMatch.refetch();
   };
 
   return (
