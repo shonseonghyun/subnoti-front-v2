@@ -18,6 +18,7 @@ const FullLayout = lazy(() => import('../layouts/full/FullLayout'));
 const BlankLayout = lazy(() => import('../layouts/blank/BlankLayout'));
 
 const PrivateRoute = lazy(() => import('../private/PrivateRoute'));
+const NotLoginedRoute = lazy(() => import('../private/NotLoginedRoute'));
 
 /* ****Pages***** */
 const Dashboard = lazy(() => import("../views/dashboard/page"));
@@ -48,9 +49,10 @@ const Router = [
     children: [
       { path: '404', element: <Error /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
-      { path: '/auth/register', element: <Register /> },
-      { path: '/auth/login', element: <Login /> },
-
+      { path:"", element:<NotLoginedRoute />, children:[
+        { path: '/auth/register', element: <Register /> },
+        { path: '/auth/login', element: <Login /> },
+      ]},
     ],
   },
   { basename: '/' }
