@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
-import { useRegFetchSubNoti } from 'src/hooks/mutation/useRegFetchSubNoti';
 import { useFetchGetPlabMatch } from 'src/hooks/query/useFetchPlabMatch';
 import { INotiRegType } from 'src/type/type';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
@@ -21,6 +20,7 @@ import {
 } from '@mui/material';
 import { useFetchGetEnum } from 'src/hooks/query/useFetchGetEnum';
 import { toastFail, toastFailMsg, toastSucMsg } from 'src/utils/toast/toast';
+import { useFetchRegSubNoti } from 'src/hooks/mutation/useFetchRegSubNoti';
 
 const NotiReg = () => {
   const authUserInfo = useAuthStore((state) => state.authUserInfo);
@@ -48,7 +48,7 @@ const NotiReg = () => {
 
   //============================ useRegFetchSubNoti =======================================//
   const queryClient = useQueryClient();
-  const onSuccess = () => {
+  const onRegSubNotiSuccess = () => {
     toastSucMsg("등록 성공하였습니다.");
     reset();
     setIsMathcNoAvailable(false);
@@ -56,7 +56,7 @@ const NotiReg = () => {
     // 리스트를 invalidate 시키지만 refetch 시킴
     queryClient.invalidateQueries(['noti'], { refetchInactive: true });
   };
-  const regSubNotiMutation = useRegFetchSubNoti(onSuccess);
+  const regSubNotiMutation = useFetchRegSubNoti(onRegSubNotiSuccess);
   //============================ useRegFetchSubNoti =======================================//
 
 

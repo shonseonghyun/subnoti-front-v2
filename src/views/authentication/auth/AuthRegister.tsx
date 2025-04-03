@@ -76,23 +76,18 @@ const AuthRegister = ({subtitle}:any) => {
         trigger,
       } = useForm<IMemberRegType>({ mode: 'onSubmit' });
 
-    const onSuccess = () =>{
+
+    //============================ useFetchJoin =======================================//
+    const onJoinSuccess = () =>{
         toastSuc();
         navigate("/auth/login");
     }
-    const joinMutation = useFetchJoin(onSuccess);
-    
-    const onValid = (data: IMemberRegType) => {
-        if(!isEmailAvailable){
-            toastFailMsg("이메일 중복검사 바랍니다.");
-            return ;  
-        }
+    const joinMutation = useFetchJoin(onJoinSuccess);
+    //============================ useFetchJoin =======================================//
 
-        joinMutation.mutate(data);
-    };
+
 
   //============================ useFetchGetEmailDuplicate =======================================//
-
     const onGetEmailDuplicateSuccess = (data:any)=>{
         if(data.data){
             toastFailMsg("이미 가입된 이메일입니다.");
@@ -112,6 +107,15 @@ const AuthRegister = ({subtitle}:any) => {
     const getEmailDuplicate = useFetchGetEmailDuplicate(getValues("email"),onGetEmailDuplicateSuccess,onGetEmailDuplicateError);
   //============================ useFetchGetEmailDuplicate =======================================//
     
+    const onValid = (data: IMemberRegType) => {
+        if(!isEmailAvailable){
+            toastFailMsg("이메일 중복검사 바랍니다.");
+            return ;  
+        }
+
+        joinMutation.mutate(data);
+    };
+
     const clickedEmailCheckBtn = async () =>{
         checkEmailDuplicate(getValues,getFieldState,trigger,getEmailDuplicate,isEmailAvailable,setIsEmailAvailable);
     }

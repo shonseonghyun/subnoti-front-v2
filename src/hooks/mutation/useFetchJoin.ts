@@ -1,13 +1,9 @@
-import { useMutation } from "react-query";
 import { fetchJoin } from "src/api/api";
 import { IMemberRegType } from "src/type/type";
+import { useApiMutation } from "./template/useApiMutation";
 
-export const useFetchJoin=(onSuccess:any)=>{
-    return useMutation(
-        (data:IMemberRegType)=>fetchJoin(data),
-        {
-            onSuccess:onSuccess
-        }
-    );
-    
-}
+export const useFetchJoin = (onSuccess: () => void) => {
+    return useApiMutation<IMemberRegType>(fetchJoin, {
+      onSuccess,
+    });
+  };

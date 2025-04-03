@@ -1,6 +1,6 @@
 import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { useFetchLogin } from 'src/hooks/mutation/useFetchLogin';
 import useRememberId from 'src/hooks/useRememberId';
 import { ILoignRegType } from 'src/type/type';
@@ -18,8 +18,9 @@ const AuthLogin = ()=> {
     } = useForm<ILoignRegType>({ mode: 'onSubmit' });
     const [isRememberId, onToggle, checkboxRef, doRememberId, rememberId] = useRememberId(false, getValues);
     const location = useLocation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
   
+    //============================ useFetchJoin =======================================//
     const onSuccess = (data: any) => {
       setAuthUserInfo({
         accessToken: getCookie('accessToken'),
@@ -29,12 +30,15 @@ const AuthLogin = ()=> {
         memberNo: data.data.memberNo,
         name: data.data.name
       });
-  
+
       const from = location.state?.redirectedFrom?.pathname || '/';
-      navigate(from);
+      // navigate(from); 
+      window.location.href = from;
     };
-  
+
     const loginMutation = useFetchLogin(onSuccess);
+    //============================ useFetchJoin =======================================//
+  
   
     const onValid = (data: ILoignRegType) => {
       doRememberId();

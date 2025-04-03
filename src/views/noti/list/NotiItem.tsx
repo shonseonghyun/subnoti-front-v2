@@ -5,9 +5,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import React, { useCallback } from 'react';
-import { formatFullDateTimeToKorean } from 'src/utils/date';
-import { INotiItemType } from './NotiList';
+import { useQueryClient } from 'react-query';
 import { useFetchDelNoti } from 'src/hooks/mutation/useFetchDelNoti';
+import { formatFullDateTimeToKorean } from 'src/utils/date';
+import { toastSuc } from 'src/utils/toast/toast';
+import { INotiItemType } from './NotiList';
 
 type NotiItemProps ={
   noti : INotiItemType
@@ -20,7 +22,19 @@ export default function NotiItem({noti}:NotiItemProps) {
     window.open(`https://www.plabfootball.com/match/${noti.matchNo}/`);
   },[noti.matchNo]);
 
-  const delNotiMutation = useFetchDelNoti();
+
+  //============================ useFetchJoin =======================================//
+  const queryClient = useQueryClient();
+  const onDelNotiSuccess = () =>{
+    toastSuc();
+
+    // 리스트를 invalidate 시키지만 refetch 시킴
+    queryClient.invalidateQueries(['noti'], { refetchInactive: true });
+  }
+  const delNotiMutation = useFetchDelNoti(onDelNotiSuccess);
+  //============================ useFetchJoin =======================================//
+
+
   const clickedDelItem = () =>{
     delNotiMutation.mutate(noti.notiNo);
   }
