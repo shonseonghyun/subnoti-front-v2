@@ -2,11 +2,12 @@ import { Box, Button, Container, FormControl, FormHelperText, InputLabel, MenuIt
 import { useState } from 'react';
 import { UseFormGetFieldState, UseFormGetValues, UseFormTrigger, useForm } from 'react-hook-form';
 import { UseQueryResult } from 'react-query';
-import { useNavigate } from 'react-router';
+import SharedModal from 'src/components/shared/SharedModal';
 import { useFetchJoin } from 'src/hooks/mutation/useFetchJoin';
 import { useFetchGetEmailDuplicate } from 'src/hooks/query/useFetchGetEmailDuplicate';
 import { IMemberRegType } from 'src/type/type';
 import { toastFail, toastFailMsg, toastSuc, toastSucMsg } from 'src/utils/toast/toast';
+import AuthEmail from './AuthEmail';
 
 const checkEmailDuplicate = async (
     getValues: UseFormGetValues<IMemberRegType>,
@@ -63,10 +64,8 @@ const AuthRegister = ({subtitle}:any) => {
     // 이메일 중복검사 플래그
     const [isEmailAvailable,setIsEmailAvailable] = useState<boolean>(false);
     // 이메일 인증 플래그
-// const [isEmailAuthFlg,setIsEmailAuthFlg] = useState<boolean>(false);
+    const [isEmailAuthFlg,setIsEmailAuthFlg] = useState<boolean>(false);
 
-    const navigate = useNavigate();
-    
     const {
         register,
         handleSubmit,
@@ -80,7 +79,9 @@ const AuthRegister = ({subtitle}:any) => {
     //============================ useFetchJoin =======================================//
     const onJoinSuccess = () =>{
         toastSuc();
-        navigate("/auth/login");
+        const href = "/auth/login";
+
+        window.location.href = href;
     }
     const joinMutation = useFetchJoin(onJoinSuccess);
     //============================ useFetchJoin =======================================//
@@ -120,6 +121,13 @@ const AuthRegister = ({subtitle}:any) => {
         checkEmailDuplicate(getValues,getFieldState,trigger,getEmailDuplicate,isEmailAvailable,setIsEmailAvailable);
     }
 
+    // 굳이 해당 컴포넌트 자체가 무거운 컴포넌트가 아니기도 하고 isEmaliAuthFlg와 연관되었기에 인증 성공 시 반드시 리랜더링 발생
+    // const MemorizedValidBtn = useMemo(() =>{
+    //     return (
+    //         <Button variant="contained" disabled={isEmailAuthFlg}>이메일 인증</Button>
+    //     )
+    // },[isEmailAuthFlg]);
+
     return (
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -150,8 +158,11 @@ const AuthRegister = ({subtitle}:any) => {
                     />
                     <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
                         <Button variant="contained" onClick={clickedEmailCheckBtn} disabled={isEmailAvailable}>중복검사</Button>
-                        <Button variant="contained">이메일 인증</Button>
-                        {/* <SharedModal child={<AuthEmail />}></SharedModal> */}
+                        {isEmailAvailable && 
+                            <SharedModal button={<Button variant="contained" disabled={isEmailAuthFlg}>이메일 인증</Button>}>
+                                <AuthEmail isEmailAuthFlg={isEmailAuthFlg} setIsEmailAuthFlg={setIsEmailAuthFlg}/>
+                            </SharedModal>
+                        }
                     </Stack>
                     <TextField
                         label="비밀번호"
@@ -236,7 +247,7 @@ const AuthRegister = ({subtitle}:any) => {
                         helperText={errors.tel?.message}
                     />
                     <Stack spacing={2} sx={{ mt: 3 }}>
-                        <Button variant="contained" type="submit" fullWidth disabled={!isEmailAvailable}>
+                        <Button variant="contained" type="submit" fullWidth disabled={!isEmailAvailable && !isEmailAuthFlg}>
                             회원가입
                         </Button>
                     </Stack>

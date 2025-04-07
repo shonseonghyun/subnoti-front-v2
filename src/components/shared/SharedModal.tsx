@@ -1,10 +1,9 @@
-import AddIcon from '@mui/icons-material/Add';
-import { IconButton, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Modal from '@mui/material/Modal';
-import React, { useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 
 const style = {
   position: 'absolute',
@@ -23,38 +22,20 @@ const style = {
 interface IModalProps {
   children: React.ReactNode;
   title?: string;
+  button: ReactElement;
 }
 
-export default function SharedModal({ children, title }: IModalProps) {
+export default function SharedModal({ children, title, button }: IModalProps) {
   console.log("SharedModal 랜더링");
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = useCallback(() => setOpen(true),[open]);
   const handleClose = () => setOpen(false);
 
   return (
     <Box>
-      <IconButton
-        color="primary"
-        sx={{
-          mr: 1,
-          position: 'fixed',
-          zIndex: "1",
-          // right: '10%',
-          // top: '4%',
-          bottom:'10%',
-          right:'8%',
-          bgcolor: 'primary.main',
-          color: 'white',
-          '&:hover': {
-            bgcolor: 'primary.dark',
-            transform: "scale(1.1)"
-          },
-        }}
-        onClick={handleOpen}
-      >
-        <AddIcon />
-      </IconButton>
+      {React.cloneElement(button, { onClick: handleOpen })}
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -79,4 +60,4 @@ export default function SharedModal({ children, title }: IModalProps) {
   );
 }
 
-export const MemorizedSharedModal= React.memo(SharedModal);
+// export const MemorizedSharedModal= React.memo(SharedModal);
