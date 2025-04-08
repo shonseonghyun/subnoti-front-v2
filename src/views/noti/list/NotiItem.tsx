@@ -10,6 +10,7 @@ import { useFetchDelNoti } from 'src/hooks/mutation/useFetchDelNoti';
 import { formatFullDateTimeToKorean } from 'src/utils/date';
 import { toastSuc } from 'src/utils/toast/toast';
 import { INotiItemType } from './NotiList';
+import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 
 type NotiItemProps ={
   noti : INotiItemType
@@ -59,6 +60,7 @@ export default function NotiItem({noti}:NotiItemProps) {
           Del
         </Button>
       </CardActions>
+      {delNotiMutation.isLoading && <FullscreenLoader />}
     </Card>
   );
 }

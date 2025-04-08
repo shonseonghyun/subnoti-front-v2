@@ -1,5 +1,5 @@
 import { Box, Button, Container, FormControl, FormHelperText, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UseFormGetFieldState, UseFormGetValues, UseFormTrigger, useForm } from 'react-hook-form';
 import { UseQueryResult } from 'react-query';
 import SharedModal from 'src/components/shared/SharedModal';
@@ -8,6 +8,7 @@ import { useFetchGetEmailDuplicate } from 'src/hooks/query/useFetchGetEmailDupli
 import { IMemberRegType } from 'src/type/type';
 import { toastFail, toastFailMsg, toastSuc, toastSucMsg } from 'src/utils/toast/toast';
 import AuthEmail from './AuthEmail';
+import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 
 const checkEmailDuplicate = async (
     getValues: UseFormGetValues<IMemberRegType>,
@@ -72,9 +73,12 @@ const AuthRegister = ({subtitle}:any) => {
         formState: { errors },
         getFieldState,
         getValues,
+        setFocus,
         trigger,
-      } = useForm<IMemberRegType>({ mode: 'onSubmit' });
-
+    } = useForm<IMemberRegType>({ mode: 'onSubmit' });
+    useEffect(()=>{
+        setFocus("email");
+    },[]);  
 
     //============================ useFetchJoin =======================================//
     const onJoinSuccess = () =>{
@@ -254,6 +258,7 @@ const AuthRegister = ({subtitle}:any) => {
                 </Box>
             </Box>
             {subtitle}
+            {joinMutation.isLoading && <FullscreenLoader />}
         </Container>
     );
 };

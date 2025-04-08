@@ -1,6 +1,8 @@
 import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, TextField, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation } from 'react-router';
+import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 import { useFetchLogin } from 'src/hooks/mutation/useFetchLogin';
 import useRememberId from 'src/hooks/useRememberId';
 import { ILoignRegType } from 'src/type/type';
@@ -14,8 +16,13 @@ const AuthLogin = ()=> {
       register,
       handleSubmit,
       getValues,
+      setFocus,
       formState: { errors },
     } = useForm<ILoignRegType>({ mode: 'onSubmit' });
+    useEffect(()=>{
+      setFocus("email");
+    },[]);
+    
     const [isRememberId, onToggle, checkboxRef, doRememberId, rememberId] = useRememberId(false, getValues);
     const location = useLocation();
     // const navigate = useNavigate();
@@ -39,7 +46,7 @@ const AuthLogin = ()=> {
     const loginMutation = useFetchLogin(onSuccess);
     //============================ useFetchJoin =======================================//
   
-  
+    
     const onValid = (data: ILoignRegType) => {
       doRememberId();
       loginMutation.mutate(data);
@@ -98,6 +105,9 @@ const AuthLogin = ()=> {
               </Box>
             </Box>
           </Container>
+          {(loginMutation.isLoading ) && (
+        <FullscreenLoader />
+      )}
       </>
     );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useFetchGetPlabMatch } from 'src/hooks/query/useFetchPlabMatch';
@@ -8,7 +8,6 @@ import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import {
   Box,
   Button,
-  CircularProgress,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -18,9 +17,10 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import FullscreenLoader from 'src/components/shared/FullScreenLoader';
+import { useFetchRegSubNoti } from 'src/hooks/mutation/useFetchRegSubNoti';
 import { useFetchGetEnum } from 'src/hooks/query/useFetchGetEnum';
 import { toastFail, toastFailMsg, toastSucMsg } from 'src/utils/toast/toast';
-import { useFetchRegSubNoti } from 'src/hooks/mutation/useFetchRegSubNoti';
 
 const NotiReg = () => {
   const authUserInfo = useAuthStore((state) => state.authUserInfo);
@@ -36,7 +36,10 @@ const NotiReg = () => {
     setFocus,
     trigger
   } = useForm<INotiRegType>({ mode: 'onChange' });
-
+  
+  useEffect(()=>{
+    setFocus("matchNo");
+  },[]);
   
   // 매치 인증 플래그
   const [isMathcNoAvailable, setIsMathcNoAvailable] = useState(false);
@@ -112,6 +115,7 @@ const NotiReg = () => {
   };
 
   return (
+    <>
     <Box sx={{ p: 1 }}>
       <Typography variant="h5" gutterBottom>
         알림 등록
@@ -189,12 +193,12 @@ const NotiReg = () => {
         </Button>
       </Box>
 
-      {(getPlabMatch.isLoading || regSubNotiMutation.isLoading) && (
-        <Box sx={{ mt: 4, textAlign: 'center' }}>
-          <CircularProgress />
-        </Box>
-      )}
     </Box>
+      {(getPlabMatch.isLoading || regSubNotiMutation.isLoading) && (
+        <FullscreenLoader />
+      )}
+    </>
+
   );
 };
 
