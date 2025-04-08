@@ -112,7 +112,7 @@ const NotiReg = () => {
   };
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 1 }}>
       <Typography variant="h5" gutterBottom>
         알림 등록
       </Typography>

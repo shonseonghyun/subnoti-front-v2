@@ -16,7 +16,7 @@ type NotiItemProps ={
 }
 
 export default function NotiItem({noti}:NotiItemProps) {
-  console.log("NotiItem 랜더링: ",noti.notiNo);
+  console.log("NotiItem 랜더링: ",noti.matchName,"/",noti.subType);
 
   const clickedItem = useCallback(()=>{
     window.open(`https://www.plabfootball.com/match/${noti.matchNo}/`);
@@ -63,4 +63,5 @@ export default function NotiItem({noti}:NotiItemProps) {
   );
 }
 
+// 별효과를 못보는듯하다. -> 삭제 시 유무에 리랜더링 따른 차이가 없음
 export const MemoizedNotiItem = React.memo(NotiItem);

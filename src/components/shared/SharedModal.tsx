@@ -60,4 +60,4 @@ export default function SharedModal({ children, title, button }: IModalProps) {
   );
 }
 
-// export const MemorizedSharedModal= React.memo(SharedModal);
+export const MemorizedSharedModal= React.memo(SharedModal);

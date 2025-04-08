@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { MemorizedSharedModal } from '../../../components/shared/SharedModal';
 import { INotiCalenderProps } from '../NotiPage';
 import NotiReg from '../reg/NotiReg';
+import NotiRegButton from './NotiRegButton';
 
 
 export const StyledCalendarWrapper = styled.div`
@@ -178,7 +179,7 @@ export const StyledDot = styled.div`
 `;
 
 const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
-  console.log("NotiCalender 랜더링: ",date,"/",today);
+  console.log("NotiCalender 랜더링");
 
   const { authUserInfo } = useAuthStore.getState();
 
@@ -187,8 +188,8 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   const getNotiRegDates = useFetchGetNotiRegDates(authUserInfo.memberNo,startDate,endDate);
   
   const handleDateChange = (newDate: Value) => {
-    console.log("클릭한 date:",newDate);
-    console.log("기존 date:", date);
+    // console.log("클릭한 date:",newDate);
+    // console.log("기존 date:", date);
 
     if (newDate instanceof Date && date instanceof Date) {
       if (newDate.getTime() === date.getTime()){ 
@@ -199,7 +200,6 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
       console.log("동일하여 무시")  
       return;
     }
-    console.log("??");
     setDate(newDate);  
   };
 
@@ -224,6 +224,7 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
 
   //랜더링 최적화를 위해 useMemo
   const notiRegMemo = useMemo(() => <NotiReg />, []);
+  const NotiRegButtonMemo = useMemo(()=><NotiRegButton />,[]);
     
   return (
     <StyledCalendarWrapper>
@@ -276,9 +277,12 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
         }
       />
       <StyledDate onClick={handleTodayClick}>TODAY</StyledDate>
-      <MemorizedSharedModal>
+
+      <MemorizedSharedModal button={NotiRegButtonMemo}>
         {notiRegMemo}
+        {/* <NotiReg /> */}
       </MemorizedSharedModal>
+
   </StyledCalendarWrapper>
   );
 }
@@ -287,3 +291,19 @@ export default NotiCalender;
 
 // 부모가 여러 state를 가졌을 경우 재랜더링될 경우 이점을 지님. 부모의 state가 객체라 이점 보기 힘들어 기본 export 채택
 // export const MemoizedNotiCalender=React.memo(NotiCalender);
+
+// <랜더링 확인>
+
+// - NotiPage 첫 랜더링( NotiList 주석)
+// 랜더링:  NotiPage-> NotiCalender -> SharedModal -> NotiRegButton -> NotiCalender -> SharedModal -> NotiRegButton
+// 이유: 
+// 1. NotiPage는 최초 부모페이지므로 첫랜더링
+// 2. NotiCalender는 NotiPage의 자식 컴포넌트이므로 첫랜더링
+// 3. SharedModal은 NotiCalender의 자식 컴포넌트이므로 첫랜더링
+// 4. NotiRegButton은 SharedModal에서 props로 받긴 하지만 자식컴포넌트이므로 첫랜더링
+// --- useQuery로 인해 아래 다시 랜더링 된다.
+// 5. NotiCalender에선 useQuery가 진행 중이므로 fetching 완료된 상태를 업데이트하기 위해 재랜더링
+// 6. SharedModal은 부모 컴포넌트인 NotiCalender가 리랜더링되었기에 함께 리랜더링(props를 메모이징 하지 않음,usememo/useCallback/React.memo)
+// 7. NotiRegButton는 자식이므로 리랜더링
+// -> useQuery로 NotiCalender가 리랜더링되더라도 SharedModal의 리랜더링을 막기 위해 SharedModal의 메모이징과 SharedModal의 props 변경을 막기 위해 useMemo 적용
+// -> 성공(NotiPage-> NotiCalender -> SharedModal -> NotiRegButton -> NotiCalender)

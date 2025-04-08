@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 import { useFetchGetNotiListByDate } from 'src/hooks/query/useFetchGetNotiListByDate';
 import { formatCalendarValueToYYYYMMDD } from 'src/utils/date';
+import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import { INotiListProps } from '../NotiPage';
 import { MemoizedNotiItem } from './NotiItem';
-import { useAuthStore } from 'src/zustand/AuthUserInfo';
 
 export interface INotiItemType{
     notiNo:number,
@@ -16,6 +16,10 @@ export interface INotiItemType{
 
 const NotiList = ({date}:INotiListProps) => {
     console.log("NotiList 랜더링");
+    // useEffect(()=>{
+    //     console.log("date is changed: ",date?.toString());
+    // },[date]);
+    
     const authUserInfo = useAuthStore((state) => state.authUserInfo);
 
     //============================ useFetchGetNotiListByDate =======================================//
@@ -42,3 +46,7 @@ const NotiList = ({date}:INotiListProps) => {
 };
 
 export default NotiList;
+// export const MemoizedNotiList = React.memo(NotiList,(prev,next)=>{
+//     return prev.date?.toString()=== next.date?.toString();
+// });
+// export const MemoizedNotiList = React.memo(NotiList);
