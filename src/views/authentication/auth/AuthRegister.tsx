@@ -10,6 +10,26 @@ import { toastFail, toastFailMsg, toastSuc, toastSucMsg } from 'src/utils/toast/
 import AuthEmail from './AuthEmail';
 import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 
+const genders = [
+    {
+      value:"default",
+      label:"성별을 선택해주세요.",
+      disabled:true
+    },
+    {
+      value: "MALE",
+      label: "남성",
+      disabled:false
+      
+    },
+    {
+      value: "FEMALE",
+      label: "여성",
+      disabled:false
+  
+    },
+  ];
+
 const checkEmailDuplicate = async (
     getValues: UseFormGetValues<IMemberRegType>,
     getFieldState:UseFormGetFieldState<IMemberRegType>,
@@ -227,11 +247,11 @@ const AuthRegister = ({subtitle}:any) => {
                                 }
                             })}
                         >
-                            <MenuItem value="default" disabled>
-                                성별을 선택해주세요.
-                            </MenuItem>
-                            <MenuItem value="MALE">남성</MenuItem>
-                            <MenuItem value="FEMALE">여성</MenuItem>
+                            {genders.map((option) => (
+                                <MenuItem key={option.value} value={option.value} disabled={option.disabled}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
                         </Select>
 
                         <FormHelperText>{errors.gender?.message}</FormHelperText>

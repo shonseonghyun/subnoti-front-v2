@@ -51,6 +51,25 @@ export const fetchGetEnum = async (key:string)=>{
     .then(response=>response.data);
 }
 
+export const fetchGetMember = async (memberNo:number)=>{
+    const url = `/api/v1/member/${memberNo}`;
+    return await PrivateApi.get(url)
+    .then(response=>response.data);
+}
+
+export const fetchUpdateMember = async ({
+    memberNo,
+    data,
+  }: {
+    memberNo: number;
+    data: any;
+  })=>{
+    const url = `/api/v1/member/${memberNo}`;
+    return await PrivateApi.put(url,
+        data
+    ).then(response=>response.data);
+}
+
 export const fetchGetEmailDuplicate = async (email:string)=>{
     const url = `/api/v1/member/email/duplicate/${email}`;
     return await PublicApi.get(url)

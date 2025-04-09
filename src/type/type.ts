@@ -5,10 +5,18 @@ export interface ILoignRegType{
 
 export interface IMemberRegType{
     email:string,
+    name:string,
     pwd:string,
     pwdConfirm:string,
-    name:string,
     birthDt:string,
+    gender:string,
+    tel:string
+}
+
+export interface IMemberUpdateType{
+    name:string,
+    pwd:string,
+    pwdConfirm:string,
     gender:string,
     tel:string
 }
