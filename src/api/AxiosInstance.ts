@@ -20,7 +20,7 @@ const RefreshApi = axios.create({
 
 // accessToken 설정 (요청 인터셉터 등록)
 export const setAccessToken = (accessToken: string) => {
-  console.log('AxiosInstance[setAccessToken] exec');
+  // console.log('AxiosInstance[setAccessToken] exec');
 
   const requestInterceptor = PrivateApi.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -32,7 +32,7 @@ export const setAccessToken = (accessToken: string) => {
 
 // accessToken 갱신 및 재요청 처리
 export const refreshAccessTokenWithRefreshToken = () => {
-  console.log('AxiosInstance[refreshAccessTokenWithRefreshToken] exec');
+  // console.log('AxiosInstance[refreshAccessTokenWithRefreshToken] exec');
 
   const { authUserInfo, setAuthUserInfo, clearAuthUserInfo } = useAuthStore.getState();
   const refreshToken = authUserInfo.refreshToken;

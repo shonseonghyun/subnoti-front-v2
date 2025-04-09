@@ -72,7 +72,7 @@ const Profile = () => {
           <div>
             <Box paddingX={2}>
               {dropdownData.profile.map((profile) => (
-                <Box key={profile.title}>
+                <Box key={profile.title} onClick={handleClose2}>
                   <Box
                     sx={{
                       px: 2,
@@ -83,16 +83,15 @@ const Profile = () => {
                     }}
                     className="hover-text-primary"
                   >
-                    <Link to={profile.href}>
+                    <Link to={profile.href} 
+                    style={{display:"block",width:"100%"}}
+                    >
                       <Typography
                         variant="subtitle2"
                         fontWeight={500}
                         color="textPrimary"
                         className="text-hover" component='span'
                         noWrap
-                        sx={{
-                          width: '240px',
-                        }}
                       >
                         {profile.title}
                       </Typography>
@@ -103,6 +102,7 @@ const Profile = () => {
             </Box>
             <Box p={0}>
               <Box
+                onClick={handleClose2}
                 sx={{
                   px: 2,
                   py: '10px',
@@ -113,7 +113,7 @@ const Profile = () => {
                 className="hover-text-primary"
               >
                 <Button variant="outlined" 
-                color="primary" sx={{ width: "100%" }} onClick={clickedLogout}>
+                  color="primary" sx={{ width: "100%" }} onClick={clickedLogout}>
                   Logout
                 </Button>
               </Box>
