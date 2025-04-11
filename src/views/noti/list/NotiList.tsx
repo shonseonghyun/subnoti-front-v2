@@ -1,15 +1,15 @@
 import { Button, Stack } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { MemorizedSharedModal } from 'src/components/shared/SharedModal';
 import { useFetchGetNotiListByDate } from 'src/hooks/query/useFetchGetNotiListByDate';
 import { formatCalendarValueToYYYYMMDD } from 'src/utils/date';
 import { toastInfoMsg, toastSucMsg } from 'src/utils/toast/toast';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import { INotiListProps } from '../NotiPage';
-import { MemoizedNotiItem } from './NotiItem';
-import { useQueryClient } from 'react-query';
 import NotiReg from '../reg/NotiReg';
+import { MemoizedNotiItem } from './NotiItem';
 import NotiRegButton from './NotiRegButton';
-import { MemorizedSharedModal } from 'src/components/shared/SharedModal';
 
 const pageSize = 2;
 
@@ -74,19 +74,15 @@ const NotiList = ({date}:INotiListProps) => {
     // },[date]);
 
 
-    //의존성 배열에 아무것도 들어가지 않는게 맞을라나?
-    const handleDelSuccess = (deletedNotiNo: number) => {
+    const handleDelSuccess = useCallback((deletedNotiNo: number) => {
         toastSucMsg("해제 완료하였습니다.");
         setNotiList((prevList) => prevList.filter((item) => item.notiNo !== deletedNotiNo));
-      };
+      }, []);
     
     //============================ useFetchGetNotiListByDate =======================================//
     // api 통신 통한 조회 성공 경우 조회된 데이터를 notiList 추가 진행
     const onGetSubNotiSuccess = (data:any)=>{
-        console.log("[onGetSubNotiSuccess] 처리");
-
         if(nextNotiNo==null){
-            console.log("[onGetSubNotiSuccess]nextNotiNo: ",nextNotiNo);
             setNotiList([]);
         };
 
@@ -100,15 +96,8 @@ const NotiList = ({date}:INotiListProps) => {
     const getSubNoti = useFetchGetNotiListByDate(authUserInfo.memberNo,formatCalendarValueToYYYYMMDD(date),pageSize,nextNotiNo,onGetSubNotiSuccess);
     //============================ useFetchGetNotiListByDate =======================================//
 
-    useEffect(()=>{
-        console.log("[getSubNoti]리랜더링 발생");
-
-    },[getSubNoti]);
-
     const notiRegMemo = useMemo(() => <NotiReg doPostProcessingOfRegSubNoti={doPostProcessingOfRegSubNoti}/>, []);
     const NotiRegButtonMemo = useMemo(()=><NotiRegButton />,[]);
-    
-    
 
     return (
         <>
