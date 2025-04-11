@@ -9,33 +9,33 @@ import { useQueryClient } from 'react-query';
 import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 import { useFetchDelNoti } from 'src/hooks/mutation/useFetchDelNoti';
 import { formatFullDateTimeToKorean } from 'src/utils/date';
+import { toastSucMsg } from 'src/utils/toast/toast';
 import { INotiItemType } from './NotiList';
 
 type NotiItemProps ={
   noti : INotiItemType
-  handleDelSuccess: (deletedNotiNo: number) => void
+  doPostProcessingOfDelSubNoti: () => void;
+
 }
 
-export default function NotiItem({noti,handleDelSuccess}:NotiItemProps) {
+export default function NotiItem({noti,doPostProcessingOfDelSubNoti}:NotiItemProps) {
   console.log("NotiItem 랜더링: ",noti.notiNo,noti.matchName,"/",noti.subType);
 
   const clickedItem = useCallback(()=>{
     window.open(`https://www.plabfootball.com/match/${noti.matchNo}/`);
   },[noti.matchNo]);
 
-
   //============================ useFetchJoin =======================================//
   const queryClient = useQueryClient();
   const onDelNotiSuccess = () =>{
-    // 리스트를 invalidate 시키지만 refetch 시킴
-    queryClient.invalidateQueries(['noti'], { refetchInactive: true });
-    
-    handleDelSuccess(noti.notiNo);
+    toastSucMsg("해제 완료하였습니다.");
+    doPostProcessingOfDelSubNoti();
+    queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
   }
   const delNotiMutation = useFetchDelNoti(onDelNotiSuccess);
   //============================ useFetchJoin =======================================//
 
-
+  
   const clickedDelItem = () =>{
     delNotiMutation.mutate(noti.notiNo);
   }
