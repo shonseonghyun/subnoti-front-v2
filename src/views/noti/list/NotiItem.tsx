@@ -57,7 +57,7 @@ export default function NotiItem({noti,doPostProcessingOfDelSubNoti}:NotiItemPro
       </CardActionArea>
       <CardActions sx={{background:"aliceblue"}}>
         <Button size="small" color="primary" onClick={clickedDelItem}>
-          Del
+          알림 해제
         </Button>
       </CardActions>
       {delNotiMutation.isLoading && <FullscreenLoader />}

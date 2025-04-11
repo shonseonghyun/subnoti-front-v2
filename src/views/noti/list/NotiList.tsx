@@ -25,7 +25,6 @@ export interface INotiItemType{
 const NotiList = ({date}:INotiListProps) => {
     console.log("NotiList 랜더링");
     const queryClient = useQueryClient();
-
     const authUserInfo = useAuthStore((state) => state.authUserInfo);
 
     // 더보기 관련 //
@@ -33,6 +32,7 @@ const NotiList = ({date}:INotiListProps) => {
     const [nextNotiNo,setNextNotiNo] = useState<number>();
     
     const doPostProcessingOfSubNoti = useCallback(()=>{
+        //노티 등록,삭제 시 첫페이지(refetch)로 돌아가기 위한 작업 진행
         setNextNotiNo(undefined);
         queryClient.invalidateQueries(["noti","list",authUserInfo.memberNo,formatCalendarValueToYYYYMMDD(date),undefined]);
     },[authUserInfo.memberNo,date]);
@@ -41,7 +41,6 @@ const NotiList = ({date}:INotiListProps) => {
         const nextNotiNoFromApi = getSubNoti.data.data.nextNotiNo;
         setNextNotiNo(nextNotiNoFromApi);
     }
-
 
     //일자가 변경된 시 처리해야하는 로직 부분
     // useEffect(()=>{
@@ -73,29 +72,32 @@ const NotiList = ({date}:INotiListProps) => {
     //     // setNotiList((prevList) => prevList.filter((item) => item.notiNo !== deletedNotiNo));
     //   }, []);
     
+
     //============================ useFetchGetNotiListByDate =======================================//
     // api 통신 통한 조회 성공 경우 조회된 데이터를 notiList 추가 진행
     const onGetSubNotiSuccess = (data:any)=>{
+        //더 이상 보여줄 페이지가 없는 경우
         if(data.data.nextNotiNo==0){
             toastInfoMsg("마지막 페이지입니다.");
             return;
         }
 
-        //첫 페이지 조회하는 경우 notiList 초기화 진행
+        //첫 페이지 조회 시 notiList clean
         if(nextNotiNo==null){
             setNotiList([]);
         };
 
+        //notiList에 응답받은 data 추가
         setNotiList((prevList)=>
             prevList 
                 ? [...prevList,...data.data.freeSubNotiList] 
                 : data.data.freeSubNotiList
         );
     }
-
     const getSubNoti = useFetchGetNotiListByDate(authUserInfo.memberNo,formatCalendarValueToYYYYMMDD(date),pageSize,nextNotiNo,onGetSubNotiSuccess);
     //============================ useFetchGetNotiListByDate =======================================//
 
+    // React 랜더링 최적화
     const notiRegMemo = useMemo(() => <NotiReg doPostProcessingOfRegSubNoti={doPostProcessingOfSubNoti} />, []);
     const NotiRegButtonMemo = useMemo(()=><NotiRegButton />,[]);
 

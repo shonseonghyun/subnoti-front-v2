@@ -59,8 +59,8 @@ const NotiReg = ({doPostProcessingOfRegSubNoti}:INotiRegProps) => {
     toastSucMsg("등록 성공하였습니다.");
     reset();
     setIsMathcNoAvailable(false);
-    queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
     doPostProcessingOfRegSubNoti();
+    queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
   };
   const regSubNotiMutation = useFetchRegSubNoti(onRegSubNotiSuccess);
   //============================ useRegFetchSubNoti =======================================//
