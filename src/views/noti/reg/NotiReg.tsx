@@ -22,7 +22,11 @@ import { useFetchRegSubNoti } from 'src/hooks/mutation/useFetchRegSubNoti';
 import { useFetchGetEnum } from 'src/hooks/query/useFetchGetEnum';
 import { toastFail, toastFailMsg, toastSucMsg } from 'src/utils/toast/toast';
 
-const NotiReg = () => {
+interface INotiRegProps {
+  doPostProcessingOfRegSubNoti: () => void;
+};
+
+const NotiReg = ({doPostProcessingOfRegSubNoti}:INotiRegProps) => {
   const authUserInfo = useAuthStore((state) => state.authUserInfo);
   console.log("NotiReg 랜더링");
 
@@ -55,9 +59,8 @@ const NotiReg = () => {
     toastSucMsg("등록 성공하였습니다.");
     reset();
     setIsMathcNoAvailable(false);
-
-    // 리스트를 invalidate 시키지만 refetch 시킴
-    queryClient.invalidateQueries(['noti'], { refetchInactive: true });
+    queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
+    doPostProcessingOfRegSubNoti();
   };
   const regSubNotiMutation = useFetchRegSubNoti(onRegSubNotiSuccess);
   //============================ useRegFetchSubNoti =======================================//

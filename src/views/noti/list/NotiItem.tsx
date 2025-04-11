@@ -6,18 +6,18 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import React, { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
+import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 import { useFetchDelNoti } from 'src/hooks/mutation/useFetchDelNoti';
 import { formatFullDateTimeToKorean } from 'src/utils/date';
-import { toastSuc } from 'src/utils/toast/toast';
 import { INotiItemType } from './NotiList';
-import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 
 type NotiItemProps ={
   noti : INotiItemType
+  handleDelSuccess: (deletedNotiNo: number) => void
 }
 
-export default function NotiItem({noti}:NotiItemProps) {
-  console.log("NotiItem 랜더링: ",noti.matchName,"/",noti.subType);
+export default function NotiItem({noti,handleDelSuccess}:NotiItemProps) {
+  console.log("NotiItem 랜더링: ",noti.notiNo,noti.matchName,"/",noti.subType);
 
   const clickedItem = useCallback(()=>{
     window.open(`https://www.plabfootball.com/match/${noti.matchNo}/`);
@@ -27,10 +27,10 @@ export default function NotiItem({noti}:NotiItemProps) {
   //============================ useFetchJoin =======================================//
   const queryClient = useQueryClient();
   const onDelNotiSuccess = () =>{
-    toastSuc();
-
     // 리스트를 invalidate 시키지만 refetch 시킴
     queryClient.invalidateQueries(['noti'], { refetchInactive: true });
+    
+    handleDelSuccess(noti.notiNo);
   }
   const delNotiMutation = useFetchDelNoti(onDelNotiSuccess);
   //============================ useFetchJoin =======================================//

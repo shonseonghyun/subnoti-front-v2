@@ -39,8 +39,10 @@ export const fetchGetSubNotiList = async (memberNo:number)=>{
     .then(response=>response.data);
 }
 
-export const fetchGetSubNotiListByDate = async (memberNo:number,selectedDate:string)=>{
-    const url = `/api/v1/noti/freeSub/member/${memberNo}/date/${selectedDate}`;
+export const fetchGetSubNotiListByDate = async (memberNo:number,selectedDate:string,pageSize:number,nextNotiNo:number|undefined)=>{
+    const paramOfPageSize = `?pageSize=${pageSize}`;
+    const paramOfNextNotiNo = nextNotiNo ? `&notiNo=${nextNotiNo}` : ""
+    const url = `/api/v1/noti/freeSub/member/${memberNo}/date/${selectedDate}`+paramOfPageSize+paramOfNextNotiNo;
     return await PrivateApi.get(url)
     .then(response=>response.data);
 }

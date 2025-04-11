@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
@@ -7,10 +7,7 @@ import { useFetchGetNotiRegDates } from 'src/hooks/query/useFetchGetNotiRegDates
 import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue, getStartOfMonthFromValue } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import styled from "styled-components";
-import { MemorizedSharedModal } from '../../../components/shared/SharedModal';
 import { INotiCalenderProps } from '../NotiPage';
-import NotiReg from '../reg/NotiReg';
-import NotiRegButton from './NotiRegButton';
 
 
 export const StyledCalendarWrapper = styled.div`
@@ -223,8 +220,8 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   };
 
   //랜더링 최적화를 위해 useMemo
-  const notiRegMemo = useMemo(() => <NotiReg />, []);
-  const NotiRegButtonMemo = useMemo(()=><NotiRegButton />,[]);
+  // const notiRegMemo = useMemo(() => <NotiReg />, []);
+  // const NotiRegButtonMemo = useMemo(()=><NotiRegButton />,[]);
     
   return (
     <StyledCalendarWrapper>
@@ -278,10 +275,9 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
       />
       <StyledDate onClick={handleTodayClick}>TODAY</StyledDate>
 
-      <MemorizedSharedModal button={NotiRegButtonMemo}>
+      {/* <MemorizedSharedModal button={NotiRegButtonMemo}>
         {notiRegMemo}
-        {/* <NotiReg /> */}
-      </MemorizedSharedModal>
+      </MemorizedSharedModal> */}
 
   </StyledCalendarWrapper>
   );
