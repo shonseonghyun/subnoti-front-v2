@@ -1,9 +1,9 @@
 import { Button, Stack } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { MemorizedSharedModal } from 'src/components/shared/SharedModal';
 import { useFetchGetNotiListByDate } from 'src/hooks/query/useFetchGetNotiListByDate';
-import { formatCalendarValueToYYYYMMDD } from 'src/utils/date';
+import { formatCalendarValueToYYYYMMDD, getStartAndEndOfMonthFromValue } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import { INotiListProps } from '../NotiPage';
 import NotiReg from '../reg/NotiReg';
@@ -28,7 +28,7 @@ export interface INotiItemType{
 }
 
 const NotiList = ({date}:INotiListProps) => {
-    console.log("NotiList 랜더링");
+    console.log("NotiList 랜더링:",date);
     const queryClient = useQueryClient();
     const authUserInfo = useAuthStore((state) => state.authUserInfo);
 
@@ -37,25 +37,42 @@ const NotiList = ({date}:INotiListProps) => {
         notiList: [],
         nextNotiNo: undefined,
         isLastPage: false,
-      });
+      }
+    );
+
+    //date값을 최신값으로 쓰기위해 추가
+    const dateRef = useRef(date);
+        useEffect(() => {
+        dateRef.current = date;
+    }, [date]);
 
     const doPostProcessOfSubNoti = useCallback(()=>{
-            //노티 등록,삭제,일자 변경 시 첫 페이지(refetch)로 돌아가기 위한 후처리 작업 진행
-            setNotiState({
-                notiList: [],
-                nextNotiNo: undefined,
-                isLastPage: false,
-              });
-            
-            // invalidateQueries를 "다음 틱"으로 밀어서 상태 변경 이후 실행되게
-            Promise.resolve().then(() => {
-                queryClient.invalidateQueries([
-                  "noti",
-                  "list",
-                  authUserInfo.memberNo,
-                  formatCalendarValueToYYYYMMDD(date),
-                ]);
-              });
+        // const {startDate,endDate} = getStartAndEndOfMonthFromValue(dateRef.current);
+
+        //노티 등록,삭제,일자 변경 시 첫 페이지(refetch)로 돌아가기 위한 후처리 작업 진행
+        setNotiState({
+            notiList: [],
+            nextNotiNo: undefined,
+            isLastPage: false,
+        });
+        
+        // invalidateQueries를 "다음 틱"으로 밀어서 상태 변경 이후 실행되게
+        Promise.resolve().then(() => {
+            queryClient.invalidateQueries([
+              "noti",
+              "list",
+              authUserInfo.memberNo,
+              formatCalendarValueToYYYYMMDD(dateRef.current),
+            ]);
+
+            // queryClient.invalidateQueries([
+            //     'noti',
+            //     'dates',
+            //     authUserInfo.memberNo,
+            //     startDate,
+            //     endDate
+            // ], { refetchInactive: true });
+        });
         },[authUserInfo.memberNo,date]
     );
 
@@ -64,8 +81,10 @@ const NotiList = ({date}:INotiListProps) => {
         setNotiState((prev)=>({...prev,nextNotiNo:next}));
     }
 
-
+    
     // 날짜 변경에 대한 후처리 부분
+    // 즉시 실행해버리기 때문에 doPostProcessOfSubNoti() 내부의 date는 여전히 이전 값(초기값) 을 참조하고 있는 상태
+    // 그래서 useRef로 최신값을 바라바도록 수정
     useMemo(() => {
         doPostProcessOfSubNoti();
     }, [date]);

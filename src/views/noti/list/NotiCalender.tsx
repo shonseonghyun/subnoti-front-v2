@@ -3,6 +3,7 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
+import { useQueryClient } from 'react-query';
 import { useFetchGetNotiRegDates } from 'src/hooks/query/useFetchGetNotiRegDates';
 import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue, getStartOfMonthFromValue } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
@@ -178,6 +179,7 @@ export const StyledDot = styled.div`
 const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   console.log("NotiCalender 랜더링");
 
+  const queryClient = useQueryClient();
   const { authUserInfo } = useAuthStore.getState();
 
   const [activeStartDate, setActiveStartDate] = useState<Date | null>(new Date());
@@ -190,11 +192,9 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
 
     if (newDate instanceof Date && date instanceof Date) {
       if (newDate.getTime() === date.getTime()){ 
-        console.log("동일하여 무시")  
         return;
       }
     } else if (newDate === date) {
-      console.log("동일하여 무시")  
       return;
     }
     setDate(newDate);  
@@ -222,7 +222,7 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   //랜더링 최적화를 위해 useMemo
   // const notiRegMemo = useMemo(() => <NotiReg />, []);
   // const NotiRegButtonMemo = useMemo(()=><NotiRegButton />,[]);
-    
+
   return (
     <StyledCalendarWrapper>
       <StyledCalendar
@@ -243,14 +243,23 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
         }
         // 달력의 월 변경 버튼(ex. <,>) 누를 시 실행되는 로직
         onActiveStartDateChange={({ activeStartDate }) =>{
+          const { startDate, endDate } = getStartAndEndOfMonthFromValue(activeStartDate);
+          queryClient.invalidateQueries([
+            "noti",
+            "dates",
+            authUserInfo.memberNo,
+            startDate,
+            endDate,
+          ], { refetchInactive: true });     
+
           if(getStartOfMonthFromValue(today)===getStartOfMonthFromValue(activeStartDate)){
             setDate(today);
             setActiveStartDate(today);
             return ;
           }
           setDate(activeStartDate);
-          setActiveStartDate(activeStartDate)}
-        }
+          setActiveStartDate(activeStartDate);
+        }}
         // 오늘 날짜에 '오늘' 텍스트 삽입하고 출석한 날짜에 점 표시를 위한 설정
         tileContent={({ date, view }) => {
             let html = [];
