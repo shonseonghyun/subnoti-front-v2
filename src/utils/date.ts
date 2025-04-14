@@ -143,3 +143,13 @@ export const getTodayAtMidnight =()=>{
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 }
+
+export const valueToDate = (value: Value): Date | null => {
+  if (value instanceof Date) return value;
+  if (Array.isArray(value) && value[0] instanceof Date) return value[0];
+  return null;
+};
+
+export const isDifferentMonth=(prev:Date, current:Date)=>{
+  return prev!.getFullYear() !== current!.getFullYear() || prev!.getMonth() !== current!.getMonth();
+}

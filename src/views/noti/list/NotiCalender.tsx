@@ -5,7 +5,8 @@ import "react-calendar/dist/Calendar.css";
 import { Value } from 'react-calendar/dist/esm/shared/types.js';
 import { useQueryClient } from 'react-query';
 import { useFetchGetNotiRegDates } from 'src/hooks/query/useFetchGetNotiRegDates';
-import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue, getStartOfMonthFromValue } from 'src/utils/date';
+import { formatYYYYMMDDArrayToDashDates, getStartAndEndOfMonthFromValue, getStartOfMonthFromValue, valueToDate } from 'src/utils/date';
+import { invalidateMonthIfNeeded } from 'src/utils/query/invalidateMonthIfNeeded';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import styled from "styled-components";
 import { INotiCalenderProps } from '../NotiPage';
@@ -187,9 +188,6 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   const getNotiRegDates = useFetchGetNotiRegDates(authUserInfo.memberNo,startDate,endDate);
   
   const handleDateChange = (newDate: Value) => {
-    // console.log("클릭한 date:",newDate);
-    // console.log("기존 date:", date);
-
     if (newDate instanceof Date && date instanceof Date) {
       if (newDate.getTime() === date.getTime()){ 
         return;
@@ -201,19 +199,18 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
   };
 
   const handleTodayClick = () => {
+    const prev = valueToDate(date)!;
+    const current = today;    
+    invalidateMonthIfNeeded(queryClient, prev, current, authUserInfo.memberNo);
+
     // 기존
     // 새로운 Date 객체를 만들어서 넘겨주기 때문에, 값은 같아 보여도 참조(reference)가 달라서 리렌더링 발생
     // setActiveStartDate(today);
     // setDate(today);
-
-    // 개선
-    const currentDate = date instanceof Date ? date : null;
-  
-    if (!currentDate || currentDate.getTime() !== today.getTime()) {
+    // 개선(비교 후 업데이트)
+    if (!prev || prev.getTime() !== today.getTime()) {
       setDate(today);
     }
-  
-    // activeStartDate도 마찬가지로 비교 후 업데이트
     if (!activeStartDate || activeStartDate.getTime() !== today.getTime()) {
       setActiveStartDate(today);
     }
@@ -243,14 +240,10 @@ const NotiCalender = ({today,date,setDate}:INotiCalenderProps) => {
         }
         // 달력의 월 변경 버튼(ex. <,>) 누를 시 실행되는 로직
         onActiveStartDateChange={({ activeStartDate }) =>{
-          const { startDate, endDate } = getStartAndEndOfMonthFromValue(activeStartDate);
-          queryClient.invalidateQueries([
-            "noti",
-            "dates",
-            authUserInfo.memberNo,
-            startDate,
-            endDate,
-          ], { refetchInactive: true });     
+          const prev = valueToDate(date)!;
+          const current = activeStartDate!;
+        
+          invalidateMonthIfNeeded(queryClient, prev, current, authUserInfo.memberNo);
 
           if(getStartOfMonthFromValue(today)===getStartOfMonthFromValue(activeStartDate)){
             setDate(today);
