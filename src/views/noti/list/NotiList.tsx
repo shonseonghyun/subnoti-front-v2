@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { MemorizedSharedModal } from 'src/components/shared/SharedModal';
 import { useFetchGetNotiListByDate } from 'src/hooks/query/useFetchGetNotiListByDate';
-import { formatCalendarValueToYYYYMMDD, getStartAndEndOfMonthFromValue } from 'src/utils/date';
+import { formatCalendarValueToYYYYMMDD } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import { INotiListProps } from '../NotiPage';
 import NotiReg from '../reg/NotiReg';
@@ -64,14 +64,6 @@ const NotiList = ({date}:INotiListProps) => {
               authUserInfo.memberNo,
               formatCalendarValueToYYYYMMDD(dateRef.current),
             ]);
-
-            // queryClient.invalidateQueries([
-            //     'noti',
-            //     'dates',
-            //     authUserInfo.memberNo,
-            //     startDate,
-            //     endDate
-            // ], { refetchInactive: true });
         });
         },[authUserInfo.memberNo,date]
     );
