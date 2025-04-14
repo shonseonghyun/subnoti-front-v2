@@ -23,10 +23,10 @@ import { useFetchGetEnum } from 'src/hooks/query/useFetchGetEnum';
 import { toastFail, toastFailMsg, toastSucMsg } from 'src/utils/toast/toast';
 
 interface INotiRegProps {
-  doPostProcessingOfRegSubNoti: () => void;
+  doPostProcessOfRegSubNoti: () => void;
 };
 
-const NotiReg = ({doPostProcessingOfRegSubNoti}:INotiRegProps) => {
+const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
   const authUserInfo = useAuthStore((state) => state.authUserInfo);
   console.log("NotiReg 랜더링");
 
@@ -59,7 +59,7 @@ const NotiReg = ({doPostProcessingOfRegSubNoti}:INotiRegProps) => {
     toastSucMsg("등록 성공하였습니다.");
     reset();
     setIsMathcNoAvailable(false);
-    doPostProcessingOfRegSubNoti();
+    doPostProcessOfRegSubNoti();
     queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
   };
   const regSubNotiMutation = useFetchRegSubNoti(onRegSubNotiSuccess);

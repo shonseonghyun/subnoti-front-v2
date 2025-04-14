@@ -14,11 +14,11 @@ import { INotiItemType } from './NotiList';
 
 type NotiItemProps ={
   noti : INotiItemType
-  doPostProcessingOfDelSubNoti: () => void;
+  doPostProcessOfDelSubNoti: () => void;
 
 }
 
-export default function NotiItem({noti,doPostProcessingOfDelSubNoti}:NotiItemProps) {
+export default function NotiItem({noti,doPostProcessOfDelSubNoti}:NotiItemProps) {
   console.log("NotiItem 랜더링: ",noti.notiNo,noti.matchName,"/",noti.subType);
 
   const clickedItem = useCallback(()=>{
@@ -29,7 +29,7 @@ export default function NotiItem({noti,doPostProcessingOfDelSubNoti}:NotiItemPro
   const queryClient = useQueryClient();
   const onDelNotiSuccess = () =>{
     toastSucMsg("해제 완료하였습니다.");
-    doPostProcessingOfDelSubNoti();
+    doPostProcessOfDelSubNoti();
     queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
   }
   const delNotiMutation = useFetchDelNoti(onDelNotiSuccess);
