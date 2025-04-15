@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useFetchGetPlabMatch } from 'src/hooks/query/useFetchPlabMatch';
 import { INotiRegType } from 'src/type/type';
@@ -34,15 +34,21 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
     register,
     handleSubmit,
     formState: { errors },
-    resetField,
     getValues,
     reset,
+    control,
     setFocus,
     trigger
-  } = useForm<INotiRegType>({ mode: 'onChange' });
+  } = useForm<INotiRegType>({ mode: 'onChange'});
   
+  const focusMatchNo = () => {
+    setTimeout(() => {
+      setFocus("matchNo");
+    }, 0);
+  };
+
   useEffect(()=>{
-    setFocus("matchNo");
+    focusMatchNo();
   },[]);
   
   // 매치 인증 플래그
@@ -61,6 +67,7 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
     setIsMathcNoAvailable(false);
     doPostProcessOfRegSubNoti();
     queryClient.invalidateQueries(['noti','dates'], { refetchInactive: true });
+    focusMatchNo();
   };
   const regSubNotiMutation = useFetchRegSubNoti(onRegSubNotiSuccess);
   //============================ useRegFetchSubNoti =======================================//
@@ -91,11 +98,13 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
   };
 
   const clickedResetBtn = () => {
-    resetField('matchNo');
-    setFocus('matchNo');
+    reset();
+    // setFocus('matchNo');
     if(isMathcNoAvailable==true){
       setIsMathcNoAvailable(false);
     }
+      // 다음 tick에 포커스 이동
+      focusMatchNo();
   };
 
 
@@ -111,6 +120,7 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
     if(!isValid){
       reset();
       toastFailMsg(errors?.matchNo?.message!);
+      focusMatchNo();
       return ;
     }
 
@@ -131,6 +141,7 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
           <TextField
             label="매치 번호"
             placeholder="매치번호를 입력하세요."
+            autoComplete='off'
             {...register('matchNo', {
               required: '매치번호를 입력해주세요.',
               pattern: {
@@ -156,7 +167,7 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
           </Stack>
         </FormControl>
 
-        <FormControl fullWidth margin="normal" error={!!errors.subType}>
+        {/* <FormControl fullWidth margin="normal" error={!!errors.subType}>
           <InputLabel>서브 타입</InputLabel>
           <Select
             defaultValue="default"
@@ -181,6 +192,36 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
           {errors.subType && (
             <FormHelperText>{errors.subType.message}</FormHelperText>
           )}
+        </FormControl> */}
+        
+        <FormControl fullWidth margin="normal" error={!!errors.subType}>
+          <InputLabel>서브 타입</InputLabel>
+
+          <Controller
+            name="subType"
+            control={control}
+            defaultValue="default"
+            rules={{
+              validate: (value) =>
+                value !== "default" || "서브 타입을 선택해주세요.",
+            }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                label="서브 타입"
+              >
+                <MenuItem value="default" disabled>
+                  프리 서브를 선택해주세요.
+                </MenuItem>
+                {getSubTypeEnum.data?.data.map((item: any) => (
+                  <MenuItem key={item.name} value={item.name}>
+                    {item.desc}
+                  </MenuItem>
+                ))}
+              </Select>
+            )}
+          />
+          {errors.subType && <FormHelperText>{errors.subType.message}</FormHelperText>}
         </FormControl>
 
         <Button
