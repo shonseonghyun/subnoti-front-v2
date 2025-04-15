@@ -11,8 +11,8 @@ export const QueryClientSettings = () => {
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-        retry:0,
-        // useErrorBoundary:true
+        retry:1,
+        useErrorBoundary:true,
         onError:(error:any) =>{
           toastFail(error);
         }

@@ -1,10 +1,14 @@
 import { Box, Container, styled, useTheme } from '@mui/material';
 import { FC } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 // import Header from './vertical/header/Header';
 import Footer from './shared/footer/Footer';
 import Header from './vertical/header/Header';
 import Sidebar from './vertical/sidebar/Sidebar';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from 'src/components/shared/ErrorFallback';
+import { useQueryErrorResetBoundary } from 'react-query';
+
 
 const MainWrapper = styled('div')(() => ({}));
 
@@ -18,6 +22,8 @@ const PageWrapper = styled('div')(() => ({
 
 const FullLayout: FC = () => {
   const theme = useTheme();
+  const { reset } = useQueryErrorResetBoundary();
+  const location = useLocation();
 
   return (
     <>
@@ -62,7 +68,9 @@ const FullLayout: FC = () => {
             {/* ------------------------------------------- */}
 
             <Box mt={4} sx={{ minHeight: 'calc(100vh - 260px)' }}>
-              <Outlet />
+              <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset} resetKeys={[location.pathname]}>
+                <Outlet />
+              </ErrorBoundary>
             </Box>
             <Footer />
             {/* ------------------------------------------- */}

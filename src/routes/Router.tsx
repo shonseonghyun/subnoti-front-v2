@@ -23,7 +23,7 @@ const NotLoginedRoute = lazy(() => import('../private/NotLoginedRoute'));
 /* ****Pages***** */
 const Dashboard = lazy(() => import("../views/dashboard/page"));
 const NotiPage = lazy(() => import('../views/noti/NotiPage'));
-const Error = lazy(() => import('../views/authentication/NotFound'));
+const NotFound = lazy(() => import('../views/authentication/NotFound'));
 const Register = lazy(() => import('../views/authentication/Register'));
 const Login = lazy(() => import('../views/authentication/Login'));
 const Profile = lazy(() => import('../views/form-layouts/FormLayouts'));
@@ -47,7 +47,7 @@ const Router = [
     path: '/auth',
     element: <BlankLayout />,
     children: [
-      { path: '404', element: <Error /> },
+      { path: '404', element: <NotFound /> },
       { path: '*', element: <Navigate to="/auth/404" /> },
       { path:"", element:<NotLoginedRoute />, children:[
         { path: '/auth/register', element: <Register /> },

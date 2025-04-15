@@ -6,7 +6,7 @@ export const useFetchGetPlabMatch=(matchNo:number,onSuccess:()=>void,onError:(er
         queryKey:["plabMatchNo",{matchNo:matchNo}],
         queryFn: ()=>fetchGetPlabMatch(matchNo),
         enabled:false, 
-        // useErrorBoundary:false,
+        useErrorBoundary:false,
         onSuccess:onSuccess,
         onError: onError
     });

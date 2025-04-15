@@ -7,23 +7,8 @@ export const useFetchGetEmailDuplicate=(email:string,onSuccess:(data: any) => vo
         queryKey:["checkEmailDuplicate",email],
         queryFn: ()=>fetchGetEmailDuplicate(email),
         enabled:false,
+        useErrorBoundary:false,
         onSuccess: onSuccess,
         onError:onError
     });
 }
-
-// export const useFetchGetEmailDuplicates = (
-//     email: string,
-//     onSuccess: (data: any) => void,
-//     onError: (error: any) => void
-//   ) => {
-//     return useApiQuery(
-//       ['checkEmailDuplicate', email],
-//       () => fetchGetEmailDuplicate(email),
-//       {
-//         enabled: false,
-//         onSuccess,
-//         onError,
-//       }
-//     );
-//   };
