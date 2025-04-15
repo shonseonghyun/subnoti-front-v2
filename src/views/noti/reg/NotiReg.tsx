@@ -42,8 +42,8 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
   } = useForm<INotiRegType>({ mode: 'onChange'});
   
   const focusMatchNo = () => {
-    setTimeout(() => {
-      setFocus("matchNo");
+    setTimeout(() => { //헤딩 컴포넌트가 다시 렌더링되고 마운트가 완료된 뒤에 실행되는 비동기 코드로 안전하게 포커스를 줄 수 있게 해주는 트릭입니다.
+      setFocus("matchNo"); // 해당 컴포넌트 마운트 및 렌더링 반영이 끝난 후 실행
     }, 0);
   };
 
@@ -99,7 +99,6 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
 
   const clickedResetBtn = () => {
     reset();
-    // setFocus('matchNo');
     if(isMathcNoAvailable==true){
       setIsMathcNoAvailable(false);
     }
