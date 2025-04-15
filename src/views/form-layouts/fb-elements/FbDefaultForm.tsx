@@ -16,7 +16,13 @@ import { IMemberUpdateType } from "src/type/type";
 import { toastSucMsg } from "src/utils/toast/toast";
 import { useAuthStore } from "src/zustand/AuthUserInfo";
 import BaseCard from "../../../components/BaseCard/BaseCard";
+import FullscreenLoader from "src/components/shared/FullScreenLoader";
 const genders = [
+  {
+    value:"default",
+    label:"성별을 선택해주세요.",
+    disabled:true
+  },
   {
     value: "MALE",
     label: "남성",
@@ -40,7 +46,14 @@ const FbDefaultForm = () => {
     getValues,
     control,
     reset,
-  } = useForm<IMemberUpdateType>({ mode: 'onBlur' });
+  } = useForm<IMemberUpdateType>({ mode: 'onBlur',
+    defaultValues:{
+      gender:"default",
+      name:"",
+      tel:"",
+      pwd:""
+    }
+   });
 
   //onSuccess로 초기값 설정하자니 캐시 타임 때문에 무조건 랜더링마다 api 요청하는 게 아니라서 onSuccess 후처리 작동 X
   // const onSuccess = (data:any) =>{
@@ -111,6 +124,7 @@ const FbDefaultForm = () => {
             id="email-text"
             defaultValue={authUserInfo.email}
             label="Email"
+            autoComplete="email"
             InputLabelProps={{ shrink: true }}
             type="email"
             InputProps={{ readOnly: true }}
@@ -242,7 +256,7 @@ const FbDefaultForm = () => {
                   sx={{ mb: 2, width: "100%" }}
                 >
                   {genders.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem key={option.value} value={option.value} disabled={option.disabled}>
                       {option.label}
                     </MenuItem>
                   ))}
@@ -258,6 +272,9 @@ const FbDefaultForm = () => {
           </div>
         </Box>
       </BaseCard>
+      {(getMember.isLoading || updateMember.isLoading) && (
+        <FullscreenLoader />
+      )}
     </div>
   );
 };
