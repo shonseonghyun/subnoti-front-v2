@@ -10,7 +10,7 @@ const FullscreenLoader = () => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명한 검정 배경
+        backgroundColor: 'rgba(0, 0, 0, 0.05)', // 반투명한 검정 배경
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

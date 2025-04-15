@@ -2,9 +2,9 @@ const baselightTheme = {
   direction: 'ltr',
   palette: {
     primary: {
-      main: '#1B84FF',
+      main: '#1583ff',
       light: '#EDF5FD',
-      dark: '#1B84FF',
+      dark: '#1583ff',
       transparent: "#ffffff00"
     },
     secondary: {
@@ -152,7 +152,7 @@ const baselightTheme = {
           },
           borderRadius: "7px",
           '&.Mui-focused .MuiOutlinedInput-notchedOutline, &:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#1B84FF !important'
+            borderColor: '#1583ff !important'
           },
 
         },
