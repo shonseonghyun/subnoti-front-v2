@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { MemorizedSharedModal } from 'src/components/shared/SharedModal';
 import { useFetchGetNotiListByDate } from 'src/hooks/query/useFetchGetNotiListByDate';
+import { useDidUpdate } from 'src/hooks/useDidUpdate';
 import { formatCalendarValueToYYYYMMDD } from 'src/utils/date';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import { INotiListProps } from '../NotiPage';
@@ -29,6 +30,7 @@ export interface INotiItemType{
 
 const NotiList = ({date}:INotiListProps) => {
     console.log("NotiList 랜더링:",date);
+
     const queryClient = useQueryClient();
     const authUserInfo = useAuthStore((state) => state.authUserInfo);
 
@@ -46,7 +48,9 @@ const NotiList = ({date}:INotiListProps) => {
         dateRef.current = date;
     }, [date]);
 
+    
     const doPostProcessOfSubNoti = useCallback(()=>{
+        console.log("doPostProcessOfSubNoti");
         // const {startDate,endDate} = getStartAndEndOfMonthFromValue(dateRef.current);
 
         //노티 등록,삭제,일자 변경 시 첫 페이지(refetch)로 돌아가기 위한 후처리 작업 진행
@@ -61,29 +65,34 @@ const NotiList = ({date}:INotiListProps) => {
             queryClient.invalidateQueries([
               "noti",
               "list",
-              authUserInfo.memberNo,
+            authUserInfo.memberNo,
               formatCalendarValueToYYYYMMDD(dateRef.current),
             ]);
         });
         },[authUserInfo.memberNo,date]
     );
+    useDidUpdate(doPostProcessOfSubNoti,[date]);
+
+    // 날짜 변경에 대한 후처리 부분
+    // 즉시 실행해버리기 때문에 doPostProcessOfSubNoti() 내부의 date는 여전히 이전 값(초기값) 을 참조하고 있는 상태
+    // 그래서 useRef로 최신값을 바라바도록 수정
+    // 첫 랜더링 시 수행되지 않아도 되므로 주석
+    // useMemo(() => {
+    //     doPostProcessOfSubNoti();dl
+    // }, [date]);
+    // 개선
+
 
     const handleLoadMore = () =>{
         const next = getSubNoti.data.data.nextNotiNo;
         setNotiState((prev)=>({...prev,nextNotiNo:next}));
     }
 
-    
-    // 날짜 변경에 대한 후처리 부분
-    // 즉시 실행해버리기 때문에 doPostProcessOfSubNoti() 내부의 date는 여전히 이전 값(초기값) 을 참조하고 있는 상태
-    // 그래서 useRef로 최신값을 바라바도록 수정
-    useMemo(() => {
-        doPostProcessOfSubNoti();
-    }, [date]);
 
     //============================ useFetchGetNotiListByDate =======================================//
     // api 통신 통한 조회 성공 경우 조회된 데이터를 notiList 추가 진행
     const onGetSubNotiSuccess = (data:any)=>{
+        console.log("onGetSubNotiSuccess");
         const fetchedNotiList = data.data.freeSubNotiList;
         const next = data.data.nextNotiNo;
 
@@ -137,6 +146,8 @@ const NotiList = ({date}:INotiListProps) => {
 };
 
 export default NotiList;
+// (NotiList as any).whyDidYouRender = true;
+
 // export const MemoizedNotiList = React.memo(NotiList,(prev,next)=>{
 //     return prev.date?.toString()=== next.date?.toString();
 // });
