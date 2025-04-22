@@ -264,11 +264,11 @@ const FbDefaultForm = () => {
             )}
           />
 
-          <div>
+          <Box display="flex" justifyContent="end" >
             <Button type="submit" color="primary" variant="contained">
               수정
             </Button>
-          </div>
+          </Box>
         </Box>
       </BaseCard>
     </div>

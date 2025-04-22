@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import { useAuthStore } from 'src/zustand/AuthUserInfo';
 import * as dropdownData from './data';
+import { toastInfoMsg } from 'src/utils/toast/toast';
 
 
 
@@ -21,6 +22,7 @@ const Profile = () => {
   };
 
   const clickedLogout = () =>{
+    toastInfoMsg("로그아웃 완료되었습니다");
     clearAuthUserInfo();
     navigate(location.pathname);
   }
