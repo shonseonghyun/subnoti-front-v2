@@ -1,4 +1,5 @@
 import { UseMutationOptions, useMutation } from 'react-query';
+import { toastFail } from 'src/utils/toast/toast';
 import { useMutationLoadingStore } from 'src/zustand/MutationLoading';
 
 export const useApiMutation = <TVariables, TData = any>(
@@ -18,10 +19,10 @@ export const useApiMutation = <TVariables, TData = any>(
       }
     },
     {
-      retry: 1,
       ...options,
       onError: (error, variables, context) => {
         setMutationLoading(false);
+        toastFail(error);
         options?.onError?.(error, variables, context);
       },
       onSuccess: (data, variables, context) => {
