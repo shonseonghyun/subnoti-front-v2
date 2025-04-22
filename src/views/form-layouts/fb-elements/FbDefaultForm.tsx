@@ -16,7 +16,6 @@ import { IMemberUpdateType } from "src/type/type";
 import { toastSucMsg } from "src/utils/toast/toast";
 import { useAuthStore } from "src/zustand/AuthUserInfo";
 import BaseCard from "../../../components/BaseCard/BaseCard";
-import FullscreenLoader from "src/components/shared/FullScreenLoader";
 const genders = [
   {
     value:"default",
@@ -272,9 +271,6 @@ const FbDefaultForm = () => {
           </div>
         </Box>
       </BaseCard>
-      {(getMember.isLoading || updateMember.isLoading) && (
-        <FullscreenLoader />
-      )}
     </div>
   );
 };

@@ -2,7 +2,6 @@ import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, TextFi
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation } from 'react-router';
-import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 import { useFetchLogin } from 'src/hooks/mutation/useFetchLogin';
 import useRememberId from 'src/hooks/useRememberId';
 import { ILoignRegType } from 'src/type/type';
@@ -105,9 +104,6 @@ const AuthLogin = ()=> {
               </Box>
             </Box>
           </Container>
-          {(loginMutation.isLoading ) && (
-        <FullscreenLoader />
-      )}
       </>
     );
 };

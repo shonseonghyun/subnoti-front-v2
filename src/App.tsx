@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { QueryClientSettings } from './query/QueryClientSettings';
 import router from './routes/Router';
 import { ThemeSettings } from './theme/Theme';
+import MutationLoading from './layouts/full/shared/MutationLoading';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         closeOnClick
       />
       <CssBaseline />
+      <MutationLoading />
       <RouterProvider router={router}/>
     </ThemeProvider>
     {/* <ReactQueryDevtools initialIsOpen={true} /> */}

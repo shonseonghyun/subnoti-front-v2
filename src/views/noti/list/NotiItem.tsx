@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import React, { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
-import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 import { useFetchDelNoti } from 'src/hooks/mutation/useFetchDelNoti';
 import { formatFullDateTimeToKorean } from 'src/utils/date';
 import { toastSucMsg } from 'src/utils/toast/toast';
@@ -60,7 +59,6 @@ export default function NotiItem({noti,doPostProcessOfDelSubNoti}:NotiItemProps)
           알림 해제
         </Button>
       </CardActions>
-      {delNotiMutation.isLoading && <FullscreenLoader />}
     </Card>
   );
 }

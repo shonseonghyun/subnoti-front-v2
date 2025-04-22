@@ -8,7 +8,6 @@ import { useFetchGetEmailDuplicate } from 'src/hooks/query/useFetchGetEmailDupli
 import { IMemberRegType } from 'src/type/type';
 import { toastFail, toastFailMsg, toastSuc, toastSucMsg } from 'src/utils/toast/toast';
 import AuthEmail from './AuthEmail';
-import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 
 const genders = [
     {
@@ -278,7 +277,6 @@ const AuthRegister = ({subtitle}:any) => {
                 </Box>
             </Box>
             {subtitle}
-            {joinMutation.isLoading && <FullscreenLoader />}
         </Container>
     );
 };

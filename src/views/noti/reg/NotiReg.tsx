@@ -17,7 +17,6 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import FullscreenLoader from 'src/components/shared/FullScreenLoader';
 import { useFetchRegSubNoti } from 'src/hooks/mutation/useFetchRegSubNoti';
 import { useFetchGetEnum } from 'src/hooks/query/useFetchGetEnum';
 import { toastFail, toastFailMsg, toastSucMsg } from 'src/utils/toast/toast';
@@ -235,13 +234,8 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
           등록
         </Button>
       </Box>
-
     </Box>
-      {(getPlabMatch.isLoading || regSubNotiMutation.isLoading) && (
-        <FullscreenLoader />
-      )}
     </>
-
   );
 };
 
