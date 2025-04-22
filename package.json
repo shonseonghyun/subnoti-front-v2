@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@emotion/cache": "11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/server": "^11.11.0",
@@ -24,8 +25,10 @@
     "@svgr/rollup": "8.1.0",
     "@tabler/icons-react": "^2.39.0",
     "@types/recoil": "^0.0.9",
+    "@welldone-software/why-did-you-render": "^10.0.1",
     "apexcharts": "4.4.0",
     "axios": "^1.8.4",
+    "emailjs-com": "^3.2.0",
     "i18next": "24.0.5",
     "lodash": "4.17.21",
     "moment": "^2.30.1",
@@ -47,6 +50,7 @@
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.5",
     "react-top-loading-bar": "^2.3.1",
+    "save": "^2.9.0",
     "simplebar-react": "^3.3.0",
     "styled-components": "^6.1.16",
     "stylis-plugin-rtl": "^2.1.1",

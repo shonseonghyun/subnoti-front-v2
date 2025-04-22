@@ -183,7 +183,7 @@ const AuthRegister = ({subtitle}:any) => {
                         <Button variant="contained" onClick={clickedEmailCheckBtn} disabled={isEmailAvailable}>중복검사</Button>
                         {isEmailAvailable && 
                             <SharedModal button={<Button variant="contained" disabled={isEmailAuthFlg}>이메일 인증</Button>}>
-                                <AuthEmail isEmailAuthFlg={isEmailAuthFlg} setIsEmailAuthFlg={setIsEmailAuthFlg}/>
+                                <AuthEmail email={getValues("email")} isEmailAuthFlg={isEmailAuthFlg} setIsEmailAuthFlg={setIsEmailAuthFlg}/>
                             </SharedModal>
                         }
                     </Stack>
