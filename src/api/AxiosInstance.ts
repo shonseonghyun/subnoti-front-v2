@@ -6,19 +6,19 @@ import { toastFail } from 'src/utils/toast/toast';
 export const PublicApi = axios.create({
   baseURL: import.meta.env.VITE_APP_SERVER_IP,
   withCredentials: true,
-  timeout:2000
+  timeout:5000
 });
 
 export const PrivateApi = axios.create({
     baseURL: import.meta.env.VITE_APP_SERVER_IP,
     withCredentials: true,
-    timeout:2000
+    timeout:5000
 });
 
 const RefreshApi = axios.create({
     baseURL: import.meta.env.VITE_APP_SERVER_IP,
     withCredentials: true,
-    timeout:2000
+    timeout:5000
 });
 
 // accessToken 설정 (요청 인터셉터 등록)

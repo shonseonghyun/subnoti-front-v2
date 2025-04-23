@@ -13,6 +13,9 @@ const ERROR_CODE:ErrorMessage ={
     // axios error
     ERR_NETWORK:{title:'통신 에러 발생', content:'서버가 응답하지 않습니다. \n 잠시 후 다시 시도 부탁드립니다.' },
 
+    // axios timeout
+    ECONNABORTED: {title:'요청 타임아웃',content:' 서버 응답이 지연되고 있습니다. \n 인터넷 연결을 확인하거나 잠시 후 다시 시도해 주세요.'},
+
     //http status
     400: { title: '400', content: '잘못된 요청.' },
     4001: { title: '4001', content: '요청에 대한 Validation 에러입니다.' },
