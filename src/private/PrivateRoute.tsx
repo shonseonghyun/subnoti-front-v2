@@ -3,7 +3,9 @@ import { useAuthStore } from '../zustand/AuthUserInfo';
 import TokenHeaderInterceptor from './TokenHeaderInterceptor';
 
 const PrivateRoute = () => {
-    const {isLogin} = useAuthStore.getState();
+    // authUserInfo의 isLogin을 구독하여 변화 시 리랜더링의 trigger 역할
+    // why? RefreshToken마저 authUserInfo 초기화 시키고 로그인 페이지로 navigate되어야 한다. 그러기 위에선 PrivateRoute의 리랜더링이 필요하므로 isLogin 구독
+    const isLogin = useAuthStore((state) => state.isLogin);
     const currentLocation = useLocation();
     
     return isLogin 
