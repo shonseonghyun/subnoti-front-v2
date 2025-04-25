@@ -1,14 +1,16 @@
-import { useQuery } from "react-query";
 import { fetchGetEmailDuplicate } from "src/api/api";
+import { useApiQuery } from "./template/useApiQuery";
 
 export const useFetchGetEmailDuplicate=(email:string,onSuccess:(data: any) => void,onError:(error:any)=>void)=>{
-    
-    return useQuery({
-        queryKey:["checkEmailDuplicate",email],
-        queryFn: ()=>fetchGetEmailDuplicate(email),
-        enabled:false,
-        useErrorBoundary:false,
-        onSuccess: onSuccess,
-        onError:onError
-    });
+    return useApiQuery<string,any>(
+        ["checkEmailDuplicate",email],
+        fetchGetEmailDuplicate,
+        email,
+        {
+            enabled:false,
+            onSuccess:onSuccess,
+            onError:onError,
+            useErrorBoundary:false,
+        }
+    )
 }

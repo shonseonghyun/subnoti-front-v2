@@ -1,14 +1,17 @@
-import { useQuery } from "react-query";
 import { fetchGetPlabMatch } from "src/api/api";
+import { useApiQuery } from "./template/useApiQuery";
 
 export const useFetchGetPlabMatch=(matchNo:number,onSuccess:()=>void,onError:(error:any)=>void)=>{
-    return useQuery({
-        queryKey:["plabMatchNo",{matchNo:matchNo}],
-        queryFn: ()=>fetchGetPlabMatch(matchNo),
-        enabled:false, 
-        useErrorBoundary:false,
-        onSuccess:onSuccess,
-        onError: onError
-    });
+    return useApiQuery<number, any>(
+        ["plabMatchNo",{matchNo:matchNo}],
+        fetchGetPlabMatch,
+        matchNo,
+        {
+            enabled:false,
+            onSuccess:onSuccess,
+            onError:onError,
+            useErrorBoundary:false,
+        }
+    );
 }
 

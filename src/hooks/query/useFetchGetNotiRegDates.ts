@@ -1,19 +1,20 @@
-import { useQuery } from "react-query";
 import { fetchGetNotiRegDates } from "src/api/api";
+import { useApiQuery } from "./template/useApiQuery";
 
 export const useFetchGetNotiRegDates=(memberNo:number,startDt:string,endDt:string)=>{
-    return useQuery({
-        queryKey:["noti","dates",memberNo,startDt,endDt],
-        queryFn: ()=>fetchGetNotiRegDates(memberNo,startDt,endDt),
-
-        // select(data) {
-        //    npm if(data.data){
-        //         let datesArr = data.data;
-        //         for(var i=0; i<datesArr.length;i++){
-        //             datesArr[i]=formatDate(datesArr[i]);
-        //         }
-        //     }
-        //     return data;
-        // },
-    });
+    return useApiQuery<
+            { 
+                memberNo: number,
+                 startDt: string,
+                  endDt: string 
+            },
+            any
+        >(
+            ["noti","dates",memberNo,startDt,endDt],
+            fetchGetNotiRegDates,
+            {memberNo,startDt,endDt},
+            {
+                isPrivate:true
+            }
+    )
 }

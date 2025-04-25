@@ -1,32 +1,34 @@
 import { QueryClient } from "react-query";
-import { toastFail } from "src/utils/toast/toast";
 
 export const QueryClientSettings = () => {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 600000,
-        // staleTime: 2000,
-        cacheTime: 900000,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
-        retry:1,
-        useErrorBoundary:true,
-        onError:(error:any) =>{
-          toastFail(error);
-        }
-      },
+  return new QueryClient(
+  //   {
+  //   defaultOptions: {
+  //     queries: {
+  //       staleTime: 600000,
+  //       // staleTime: 2000,
+  //       cacheTime: 900000,
+  //       refetchOnMount: false,
+  //       refetchOnWindowFocus: false,
+  //       refetchOnReconnect: false,
+  //       retry:1,
+  //       suspense:true,
+  //       useErrorBoundary:true,
+  //       onError:(error:any) =>{
+  //         toastFail(error);
+  //       }
+  //     },
       
-      mutations:{
-        useErrorBoundary:false,
-        onError:(error:any) =>{
-          console.log("index.tsx mutations onError");
-          toastFail(error);
-        }
-      }
-    },
-  });
+  //     mutations:{
+  //       useErrorBoundary:false,
+  //       onError:(error:any) =>{
+  //         console.log("index.tsx mutations onError");
+  //         toastFail(error);
+  //       }
+  //     }
+  //   },
+  // }
+);
 };
 
 // React Query: onSuccess/onError 글로벌 핸들러 vs 개별 핸들러

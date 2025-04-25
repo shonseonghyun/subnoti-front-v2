@@ -30,7 +30,7 @@ export const fetchDelSubNoti = async (notiNo:number)=>{
 }
 
 export const fetchGetPlabMatch = async (matchNo:number)=>{
-    return axios.get(`https://www.plabfootball.com/api/v2/matches/${matchNo}/`)
+    return await axios.get(`https://www.plabfootball.com/api/v2/matches/${matchNo}/`).then(response=>response.data)
 }
 
 export const fetchGetSubNotiList = async (memberNo:number)=>{
@@ -39,7 +39,21 @@ export const fetchGetSubNotiList = async (memberNo:number)=>{
     .then(response=>response.data);
 }
 
-export const fetchGetSubNotiListByDate = async (memberNo:number,selectedDate:string,pageSize:number,nextNotiNo:number|undefined)=>{
+export const fetchGetSubNotiListByDate = async ({
+        memberNo,
+        selectedDate,
+        pageSize,
+        nextNotiNo
+    }:{memberNo:number,
+        selectedDate:string,
+        pageSize:number,
+        nextNotiNo:number|undefined
+    })=>{
+    // console.log("selectedDate:",selectedDate);
+    // console.log("pageSize:",pageSize);
+    console.log("통신");
+
+
     const paramOfPageSize = `?pageSize=${pageSize}`;
     const paramOfNextNotiNo = nextNotiNo ? `&notiNo=${nextNotiNo}` : ""
     const url = `/api/v1/noti/freeSub/member/${memberNo}/date/${selectedDate}`+paramOfPageSize+paramOfNextNotiNo;
@@ -89,7 +103,15 @@ export const fetchReissueAccessTokenWithRefreshToken = async (refreshToken:strin
 }
 
 
-export const fetchGetNotiRegDates = async (memberNo:number,startDt:string,endDt:string)=>{
+export const fetchGetNotiRegDates =  async ({
+    memberNo,
+    startDt,
+    endDt
+  }: {
+    memberNo: number;
+    startDt: string;
+    endDt: string;
+  })=>{
     const url = `/api/v1/noti/freeSub/member/${memberNo}/dates`;
     const queryString = `?startDt=${startDt}&endDt=${endDt}`;
     const finalUrl = url+queryString;
