@@ -79,7 +79,7 @@ const NotiReg = ({doPostProcessOfRegSubNoti}:INotiRegProps) => {
   }
 
   const onGetPlabMatchError = (error:any)=>{
-    if(error.response.data){
+    if(error.response?.data){
       toastFailMsg("존재하지 않는 매치번호입니다.");
       return ;
     }

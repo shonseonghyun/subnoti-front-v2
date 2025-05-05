@@ -1,6 +1,5 @@
-import axios from "axios";
 import { ILoignRegType, IMemberRegType, INotiRegType } from "src/type/type";
-import { PrivateApi, PublicApi } from "./AxiosInstance";
+import { PlabFootballApi, PrivateApi, PublicApi } from "./AxiosInstance";
 
 export const fetchLogin = async(data:ILoignRegType)=>{
     const url = '/api/v1/auth/login';
@@ -30,7 +29,9 @@ export const fetchDelSubNoti = async (notiNo:number)=>{
 }
 
 export const fetchGetPlabMatch = async (matchNo:number)=>{
-    return axios.get(`https://www.plabfootball.com/api/v2/matches/${matchNo}/`)
+    return PlabFootballApi.get(`matches/${matchNo}/`)
+        .then(response=>response.data);
+
 }
 
 export const fetchGetSubNotiList = async (memberNo:number)=>{

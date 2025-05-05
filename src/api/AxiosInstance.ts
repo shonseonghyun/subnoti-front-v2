@@ -21,6 +21,11 @@ const RefreshApi = axios.create({
     timeout:5000
 });
 
+export const PlabFootballApi = axios.create({
+  baseURL:"https://www.plabfootball.com/api/v2",
+  timeout:2000
+})
+
 // accessToken 설정 (요청 인터셉터 등록)
 export const setAccessToken = (accessToken: string) => {
 
