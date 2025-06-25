@@ -37,7 +37,7 @@
 <br/>
 
 # 주요 기능
-
+[⏰플랩 노티 주요 기능](https://github.com/shonseonghyun/subnoti-front-v2/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5)
 
 <br/>
 
