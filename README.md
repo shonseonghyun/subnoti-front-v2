@@ -13,16 +13,30 @@
 # ⚙ 개발 환경 및 사용 기술
 - Visual Studio Code
 - React
+  * Zustand
+    - 사용자 인증 정보 전역 관리 및 접근 제어 UI 구현
+    - React Query의 mutation에 대한 글로벌 로딩 상태 관리를 통해 일관된 사용자 경험을 제공하는 UI 구현
+   
+  * Axios
+    -  API와 통신을 위한 HTTP 클라이언트
+    -  Intercpetor 등록하여 요청/응답 전후 필요한 작업 수행(ex. 헤더 세팅,토큰 만료 시 재발급 진행 등)
+    -  Axios 에러 코드에 대한 공통 처리 유틸 구현
+ 
   * React Query
-    - 값 업데이트, 에러 핸들링 기능을 활용하여 효율적인 비동기 처리 구현
+    - 커스텀 훅 구조를 도입해 API 요청의 비동기 처리를 일관되고 효율적으로 관리
+    - QueryClient와 커스텀 훅에 공통 옵션을 적용하여 로딩 상태, 에러 발생, 성공 처리 흐름을 통합
 
-  * Axios Interceptor
-    - accessToken, refreshToken을 통한 요청/응답 전 필요한 작업 수행 (ex. 헤더 세팅, 토큰 만료 시 재발급 진행 등)
+  * React Error Boundary
+    -  렌더링 중 발생할 수 있는 예외를 사용자에게 친절하게 안내하고, 복구 가능한 구조로 구성
+    -  렌더링 에러 대응 및 사용자 친화적 예외 처리 구현
+
+    - 
+
+
 
   * styled-Components
      
-  * Zustand
-    - 로그인 시 사용자정보, useMuatation 로딩 UI 적용
+
 
   * React-hook-form
     - 필요한 데이터들을 모두 useState 로 관리하자니 불필요한 랜더링 발생
