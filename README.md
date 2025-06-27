@@ -11,39 +11,44 @@
 <br/>
 
 # ⚙ 개발 환경 및 사용 기술
-- Visual Studio Code
-- React
-  * Zustand
+- **Visual Studio Code**
+- **React**
+  * **Zustand**
     - 사용자 인증 정보 전역 관리 및 접근 제어 UI 구현
     - React Query의 mutation에 대한 글로벌 로딩 상태 관리를 통해 일관된 사용자 경험을 제공하는 UI 구현
    
-  * Axios
+  * **Axios**
     -  API와 통신을 위한 HTTP 클라이언트
     -  Interceptor 등록하여 요청/응답 전후 필요한 작업 수행(ex. 헤더 세팅,토큰 만료 시 재발급 진행 등)
     -  AxiosError 기반 공통 에러 메시지 유틸 구현
  
-  * React Query
+  * **React Query**
     - 커스텀 훅 구조를 도입해 API 요청의 비동기 처리를 일관되고 효율적으로 관리
     - QueryClient와 커스텀 훅에 공통 옵션을 적용하여 로딩 상태, 에러 발생, 성공 처리 흐름을 통합
 
-  * React Error Boundary
+  * **React Error Boundary**
     -  렌더링 중 발생할 수 있는 예외를 사용자에게 친절하게 안내하고, 복구 가능한 구조로 구성
     -  React Query의 에러 경계 처리를 연동해, 페이지 단위에서 발생하는 예외를 사용자 친화적인 메시지와 함께 처리
 
-  * styled-Components
+  * **styled-Components**
     - Props를 활용한 동적 스타일링
       
-  * React-hook-form
+  * **React-hook-form**
     - 데이터 추적 및 유효성 검사로 코드 양 감소
     - 최소한의 리렌더링으로 성능을 최적화 및 실시간 검증을 통한 UX 개선
-
-- AWS EC2
+   
+- **AWS EC2**
   * 서비스 배포 환경 구성
-- Docker
+- **Docker**
   * nginx 컨테이너 기반 정적 리소스 배포 구성
 
-- Jenkins
+- **Jenkins**
   * master 브랜치 푸시 시 자동 배포 파이프라인 구현
+
+- **환경 설정 (.env 분리)**
+   * `.env.local`, `.env.production` 파일을 활용해 개발/운영 환경을 분리
+   * 환경 별 안전하고 유연한 배포 가능
+
 
 <br/>
 
