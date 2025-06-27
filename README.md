@@ -54,43 +54,14 @@
 <br/>
 
 # 구현 페이지
-__[회원가입]__
-<p>
- <img width="288" alt="Image" src="https://github.com/user-attachments/assets/bc7fd0a6-b20d-479a-a7f4-424afb23d7a9" />
-</p>
-
-__[로그인]__
-<p>
-<img width="285" alt="Image" src="https://github.com/user-attachments/assets/60cb0eb7-4f58-4ca4-9946-2133412bfa82" />
-</p>
-
-__[내프로필]__
-<p>
- <img width="287" alt="Image" src="https://github.com/user-attachments/assets/d5ba024b-1f46-4508-a815-2f325b468c40" />
-</p>
-
-__[노티 등록]__
-<p>
- <img width="296" alt="Image" src="https://github.com/user-attachments/assets/a01c5c87-83fa-4ca8-9978-1ad74583b041" />
-</p>
-
-__[노티 리스트]__
-<p>
- <img width="293" alt="Image" src="https://github.com/user-attachments/assets/c19bfbca-aaa5-42ab-b207-51bd46d8efa9" />
-</p>
-
-
-__[에러 페이지]__
-<p>
- <img width="286" alt="Image" src="https://github.com/user-attachments/assets/d33bee69-0288-4bde-83f5-049cab75df91" />
-</p>
-
+| 기능 | 화면 예시 |
+|------|-----------|
+| 로그인 | <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/60cb0eb7-4f58-4ca4-9946-2133412bfa82" /></div> |
+| 회원가입 | <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/bc7fd0a6-b20d-479a-a7f4-424afb23d7a9" /></div> |
+| 내프로필 | <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/d5ba024b-1f46-4508-a815-2f325b468c40" /></div> |
+| 알림 등록 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/a01c5c87-83fa-4ca8-9978-1ad74583b041" /></div> |
+| 알림 리스트 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/c19bfbca-aaa5-42ab-b207-51bd46d8efa9" /></div> |
+| 에러 페이지 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/d33bee69-0288-4bde-83f5-049cab75df91" /></div> |
 
 <br/>
-
-# 개선 사항
-
-<br/>
-
-# 프로젝트를 통한 배운 경험 및 소감
 
