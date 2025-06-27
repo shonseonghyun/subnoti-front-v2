@@ -79,6 +79,13 @@ __[노티 리스트]__
  <img width="293" alt="Image" src="https://github.com/user-attachments/assets/c19bfbca-aaa5-42ab-b207-51bd46d8efa9" />
 </p>
 
+
+__[에러 페이지]__
+<p>
+ <img width="286" alt="Image" src="https://github.com/user-attachments/assets/d33bee69-0288-4bde-83f5-049cab75df91" />
+</p>
+
+
 <br/>
 
 # 개선 사항
