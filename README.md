@@ -61,7 +61,7 @@
 | 내프로필 | <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/d5ba024b-1f46-4508-a815-2f325b468c40" /></div> |
 | 알림 등록 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/a01c5c87-83fa-4ca8-9978-1ad74583b041" /></div> |
 | 알림 리스트 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/c19bfbca-aaa5-42ab-b207-51bd46d8efa9" /></div> |
-| 에러 페이지 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/d33bee69-0288-4bde-83f5-049cab75df91" /></div> |
-
+| 데이터 가져오지 못한 경우 |  <div align="center"><img width="200" alt="Image" src="https://github.com/user-attachments/assets/d33bee69-0288-4bde-83f5-049cab75df91" /></div> |
+| 데이터를 변경하는 요청 실패한 경우 |  <div align="center"><img width="290" alt="Image" src="https://github.com/user-attachments/assets/4ea03777-5709-4a8c-b7af-73b86efea00b" /></div> |
 <br/>
 
