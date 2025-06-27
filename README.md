@@ -61,7 +61,7 @@ __[회원가입]__
 
 __[로그인]__
 <p>
- <img width="462" alt="Image" src="https://github.com/user-attachments/assets/f84df1cf-96e8-4402-9f49-4db4f3150a10" />
+<img width="285" alt="Image" src="https://github.com/user-attachments/assets/60cb0eb7-4f58-4ca4-9946-2133412bfa82" />
 </p>
 
 __[내프로필]__
