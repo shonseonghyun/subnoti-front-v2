@@ -10,11 +10,13 @@ export function sendAuthCode(email:string,postSuccess:(authCode:string)=>void,po
     console.log("email: ",email);
 
     const templateParams = {
-        to_email: "sunghyun7895@naver.com", // 수신 이메일 ex) test@test.gmail.com,
+        to_email: email, // 수신 이메일 ex) test@test.gmail.com,
         authCode : authCode,
         reply_to: "no-reply@subnoti.com"
     };
 
+    console.log(templateParams);
+    
     try{
         emailjs
           .send(
