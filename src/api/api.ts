@@ -1,4 +1,4 @@
-import { ILoignRegType, IMemberRegType, INotiRegType } from "src/type/type";
+import { ILoignRegType, IMemberRegType, INotiRegType, IPayReqType, ISubscriptionDelReqType } from "src/type/type";
 import { PlabFootballApi, PrivateApi, PublicApi } from "./AxiosInstance";
 
 export const fetchLogin = async(data:ILoignRegType)=>{
@@ -96,4 +96,16 @@ export const fetchGetNotiRegDates = async (memberNo:number,startDt:string,endDt:
     const finalUrl = url+queryString;
     return await PrivateApi.get(finalUrl)
     .then(response=>response.data);
+}
+
+export const fetchPaySubscription = async(data:IPayReqType)=>{
+    const url = '/api/v1/pay';
+    return await PublicApi.post(url,
+        data
+    ).then(response=>response.data);
+}
+
+export const fetchDelSubscription = async ({memberNo,subscriptionNo}:ISubscriptionDelReqType)=>{
+    const url = `/api/v1/subscription/${memberNo}/${subscriptionNo}`;
+    return await PrivateApi.delete(url).then(response=>response.data);
 }

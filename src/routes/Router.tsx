@@ -27,6 +27,7 @@ const NotFound = lazy(() => import('../views/authentication/NotFound'));
 const Register = lazy(() => import('../views/authentication/Register'));
 const Login = lazy(() => import('../views/authentication/Login'));
 const Profile = lazy(() => import('../views/form-layouts/FormLayouts'));
+const Subscription = lazy(() => import('../views/subscription/Subscription'));
 
 
 const Router = [
@@ -39,6 +40,7 @@ const Router = [
       { path:"", element:<PrivateRoute />, children:[
         { path: 'noti/list', element: <NotiPage /> },
         { path: '/form-layouts', element: <Profile /> },
+        { path: '/subscription', element: <Subscription /> },
       ]},
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

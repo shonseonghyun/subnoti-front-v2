@@ -34,3 +34,32 @@ export interface INotiRegDatesType{
     startDt:string,
     endDt:string
 }
+
+
+export interface IPayReqType{
+    memberNo:number,
+    amount:number,
+    paymentMethod:string
+}
+
+export interface ISubscriptionDelReqType{
+    memberNo:number,
+    subscriptionNo:number,
+}
+
+export const genders = [
+    {
+      value:"default",
+      label:"성별을 선택해주세요.",
+      disabled:true
+    },
+    {
+      value: "MALE",
+      label: "남성",
+      
+    },
+    {
+      value: "FEMALE",
+      label: "여성",
+    },
+  ];

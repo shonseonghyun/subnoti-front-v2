@@ -111,7 +111,7 @@ export const refreshAccessTokenWithRefreshToken = () => {
       const originalConfig = error.config;
       const code = error.response?.data?.code;
 
-      if (code === 'J01' && refreshToken) {
+      if (code === 'G05' && refreshToken) {
         // ✅ 이미 진행 중인 refresh가 있으면 그걸 그대로 리턴
         if (refreshPromise) {
           return refreshPromise.then(() => {

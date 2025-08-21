@@ -45,6 +45,13 @@ const Menuitems: MenuitemsType[] = [
     href: '/form-layouts',
     isRequiredLogin: true,
   },
+  {
+    id: uniqueId(),
+    title: 'Subscription',
+    icon: 'atom-linear',
+    href: '/subscription',
+    isRequiredLogin: true,
+  },
   // {
   //   id: uniqueId(),
   //   title: 'Analytical',
